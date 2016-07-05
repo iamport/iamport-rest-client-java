@@ -3,7 +3,7 @@
 
 	<groupId>com.siot.iamport</groupId>
 	<artifactId>iamport-rest-client</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>IamportRestClient</name>
@@ -24,9 +24,9 @@
 	
 	<scm>
 		<url>https://github.com/iamport/iamport-rest-client-java</url>
-		<connection>scm:git:git@github.com:iamport/iamport-rest-client-java.git</connection>
-		<developerConnection>scm:git:git@github.com:iamport/iamport-rest-client-java.git</developerConnection>
-	  <tag>iamport-rest-client-0.1.0</tag>
+		<connection>scm:git:https://github.com/iamport/iamport-rest-client-java.git</connection>
+		<developerConnection>scm:git:https://github.com/iamport/iamport-rest-client-java.git</developerConnection>
+	  <tag>HEAD</tag>
   </scm>
 
 	<developers>
