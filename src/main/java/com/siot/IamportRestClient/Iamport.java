@@ -1,9 +1,16 @@
 package com.siot.IamportRestClient;
 
+import java.util.List;
+
+import com.siot.IamportRestClient.request.AgainPaymentData;
 import com.siot.IamportRestClient.request.AuthData;
 import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.request.OnetimePaymentData;
+import com.siot.IamportRestClient.request.ScheduleData;
+import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.Payment;
+import com.siot.IamportRestClient.response.Schedule;
 import com.siot.IamportRestClient.response.IamportResponse;
 
 import retrofit2.Call;
@@ -31,4 +38,27 @@ public interface Iamport {
 		@Body CancelData cancel_data
 	);
 	
+	@POST("/subscribe/payments/onetime")
+	Call<IamportResponse<Payment>> onetime_payment(
+		@Header("Authorization") String token,
+		@Body OnetimePaymentData onetime_data
+	);
+	
+	@POST("/subscribe/payments/again")
+	Call<IamportResponse<Payment>> again_payment(
+		@Header("Authorization") String token,
+		@Body AgainPaymentData again_data
+	);
+	
+	@POST("/subscribe/payments/schedule")
+	Call<IamportResponse<List<Schedule>>> schedule_subscription(
+		@Header("Authorization") String token,
+		@Body ScheduleData schedule_data
+	);
+	
+	@POST("/subscribe/payments/unschedule")
+	Call<IamportResponse<List<Schedule>>> unschedule_subscription(
+		@Header("Authorization") String token,
+		@Body UnscheduleData unschedule_data
+	);
 }
