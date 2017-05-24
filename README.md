@@ -10,15 +10,28 @@ JAVA 1.7이상의 버전을 요구합니다.
 (dependency관계에 있는 [com.squareup.retrofit2](https://github.com/square/retrofit) 이 JAVA 1.7이상의 버전을 요구합니다)
 
 
-## 설치
-maven plugin을 다음과 같이 추가하시거나, build된 [jar](build/iamport-rest-client-0.1.1-SNAPSHOT.jar) 파일을 다운로드하세요.
+## 설치  
+[JitPack](https://jitpack.io/) 을 통해 maven설정을 하실 수 있습니다.  
+
+pom.xml에 아래의 내용을 추가해주세요. 
 
 ```xml
-<dependency>
-	<groupId>com.siot.iamport</groupId>
-	<artifactId>iamport-rest-client</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
-</dependency>
+<repositories>
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
+</repositories>
+```
+
+```xml
+<dependencies>
+	<dependency>
+	    <groupId>com.github.iamport</groupId>
+	    <artifactId>iamport-rest-client-java</artifactId>
+	    <version>0.1.1</version>
+	</dependency>
+</dependencies>
 ```
 
 ## 구현된 API
