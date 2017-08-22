@@ -14,6 +14,7 @@ import com.siot.IamportRestClient.request.ScheduleEntry;
 import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
 import com.siot.IamportRestClient.response.Schedule;
 import com.siot.IamportRestClient.serializer.ScheduleEntrySerializer;
@@ -58,6 +59,24 @@ public class IamportClient {
 			
 			try {
 				Response<IamportResponse<Payment>> response = call.execute();
+				if ( response.isSuccessful() ) {
+					return response.body();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+	public IamportResponse<PagedDataList<Payment>> paymentsByStatus(String status) {
+		AccessToken auth = getAuth().getResponse();
+		if ( auth != null ) {
+			Call<IamportResponse<PagedDataList<Payment>>> call = this.iamport.payments_by_status(auth.getToken(), status);
+			
+			try {
+				Response<IamportResponse<PagedDataList<Payment>>> response = call.execute();
 				if ( response.isSuccessful() ) {
 					return response.body();
 				}

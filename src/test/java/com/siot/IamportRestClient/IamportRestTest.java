@@ -3,6 +3,7 @@ package com.siot.IamportRestClient;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -23,6 +24,7 @@ import com.siot.IamportRestClient.request.ScheduleEntry;
 import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
 import com.siot.IamportRestClient.response.Schedule;
 
@@ -53,6 +55,24 @@ public class IamportRestTest {
 		IamportResponse<Payment> payment_response = client.paymentByImpUid(test_imp_uid);
 		assertNotNull(payment_response.getResponse());
 		assertEquals(test_imp_uid, payment_response.getResponse().getImpUid());
+	}
+	
+	@Test
+	public void testPaymentsByStatusAll() {
+		IamportResponse<PagedDataList<Payment>> r_response = client.paymentsByStatus("ready");
+		IamportResponse<PagedDataList<Payment>> p_response = client.paymentsByStatus("paid");
+		IamportResponse<PagedDataList<Payment>> f_response = client.paymentsByStatus("failed");
+		IamportResponse<PagedDataList<Payment>> c_response = client.paymentsByStatus("cancelled");
+		IamportResponse<PagedDataList<Payment>> all_response = client.paymentsByStatus("all");
+		
+		assertNotNull(all_response.getResponse());
+		assertNotNull(r_response.getResponse());
+		assertNotNull(p_response.getResponse());
+		assertNotNull(f_response.getResponse());
+		assertNotNull(c_response.getResponse());
+		
+		assertTrue(all_response.getResponse().getTotal() == 
+					r_response.getResponse().getTotal() + p_response.getResponse().getTotal() + f_response.getResponse().getTotal() + c_response.getResponse().getTotal());
 	}
 	
 	@Test

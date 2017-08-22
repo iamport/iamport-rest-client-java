@@ -12,6 +12,7 @@ import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.Payment;
 import com.siot.IamportRestClient.response.Schedule;
 import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.PagedDataList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,6 +31,12 @@ public interface Iamport {
     Call<IamportResponse<Payment>> payment_by_imp_uid(
     	@Header("Authorization") String token,
         @Path("imp_uid") String imp_uid
+    );
+	
+	@GET("/payments/status/{payment_status}")
+    Call<IamportResponse<PagedDataList<Payment>>> payments_by_status(
+    	@Header("Authorization") String token,
+        @Path("payment_status") String payment_status
     );
 	
 	@POST("/payments/cancel")
