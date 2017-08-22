@@ -11,7 +11,7 @@ JAVA 1.7이상의 버전을 요구합니다.
 
 
 ## 설치  
-[JitPack](https://jitpack.io/) 을 통해 maven설정을 하실 수 있습니다.  
+[JitPack](https://jitpack.io/#iamport/iamport-rest-client-java) 을 통해 maven설정을 하실 수 있습니다.  
 
 pom.xml에 아래의 내용을 추가해주세요. 
 
