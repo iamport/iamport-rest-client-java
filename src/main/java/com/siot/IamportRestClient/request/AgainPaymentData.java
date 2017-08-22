@@ -44,5 +44,69 @@ public class AgainPaymentData {
 		this.merchant_uid = merchant_uid;
 		this.amount = amount;
 	}
+
+	public BigDecimal getVat() {
+		return vat;
+	}
+
+	public void setVat(BigDecimal vat) {
+		this.vat = vat;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getBuyerName() {
+		return buyer_name;
+	}
+
+	public void setBuyerName(String buyer_name) {
+		this.buyer_name = buyer_name;
+	}
+
+	public String getBuyerEmail() {
+		return buyer_email;
+	}
+
+	public void setBuyerEmail(String buyer_email) {
+		this.buyer_email = buyer_email;
+	}
+
+	public String getBuyerTel() {
+		return buyer_tel;
+	}
+
+	public void setBuyerTel(String buyer_tel) {
+		this.buyer_tel = buyer_tel;
+	}
+
+	public String getBuyerAddr() {
+		return buyer_addr;
+	}
+
+	public void setBuyerAddr(String buyer_addr) {
+		this.buyer_addr = buyer_addr;
+	}
+
+	public String getBuyerPostcode() {
+		return buyer_postcode;
+	}
+
+	public void setBuyerPostcode(String buyer_postcode) {
+		this.buyer_postcode = buyer_postcode;
+	}
+
+	public int getCardQuota() {
+		return card_quota;
+	}
+
+	public void setCardQuota(int card_quota) {
+		this.card_quota = card_quota;
+	}	
 	
 }
