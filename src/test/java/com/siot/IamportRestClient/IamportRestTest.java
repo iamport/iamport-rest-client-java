@@ -8,25 +8,17 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.siot.IamportRestClient.request.AgainPaymentData;
 import com.siot.IamportRestClient.request.CancelData;
-import com.siot.IamportRestClient.request.CardInfo;
-import com.siot.IamportRestClient.request.OnetimePaymentData;
-import com.siot.IamportRestClient.request.ScheduleData;
-import com.siot.IamportRestClient.request.ScheduleEntry;
-import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
-import com.siot.IamportRestClient.response.Schedule;
+import com.siot.IamportRestClient.response.PaymentCancelDetail;
 
 /**
  * Unit test for simple App.
@@ -55,6 +47,14 @@ public class IamportRestTest {
 		IamportResponse<Payment> payment_response = client.paymentByImpUid(test_imp_uid);
 		assertNotNull(payment_response.getResponse());
 		assertEquals(test_imp_uid, payment_response.getResponse().getImpUid());
+		
+		String test_imp_uid_cancelled = "imp_138841716839";
+		IamportResponse<Payment> cancelled_response = client.paymentByImpUid(test_imp_uid_cancelled);
+		Payment cancelled = cancelled_response.getResponse();
+		PaymentCancelDetail[] cancelDetail = cancelled.getCancelHistory();
+		
+		assertEquals(cancelDetail.length, 1);
+		assertNotNull(cancelDetail[0].getPgTid());
 	}
 	
 	@Test

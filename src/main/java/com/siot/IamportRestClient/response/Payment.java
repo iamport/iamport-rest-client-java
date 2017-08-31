@@ -94,6 +94,12 @@ public class Payment {
 	@SerializedName("receipt_url")
 	String receipt_url;
 	
+	@SerializedName("cancel_history")
+	PaymentCancelDetail[] cancel_history;
+	
+	@SerializedName("cash_receipt_issued")
+	boolean cash_receipt_issued;
+	
 	public String getImpUid() {
 		return imp_uid;
 	}
@@ -208,6 +214,14 @@ public class Payment {
 
 	public String getReceiptUrl() {
 		return receipt_url;
+	}
+
+	public PaymentCancelDetail[] getCancelHistory() {
+		return cancel_history;
+	}
+
+	public boolean isCashReceiptIssued() {
+		return cash_receipt_issued;
 	}
 	
 }
