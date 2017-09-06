@@ -32,5 +32,21 @@ public class PaymentBalance {
 	public List<PaymentBalanceEntry> getHistories() {
 		return histories;
 	}
+	
+	public Balance getCashReceipt() {
+		return cash_receipt;
+	}
+
+	public Balance getPrimary() {
+		return primary;
+	}
+
+	public Balance getSecondary() {
+		return secondary;
+	}
+
+	public Balance getDiscount() {
+		return discount;
+	}
 
 }
