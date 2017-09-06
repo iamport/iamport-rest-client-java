@@ -28,11 +28,23 @@ public class Payment {
 	@SerializedName("apply_num")
 	String apply_num;
 	
+	@SerializedName("bank_code")
+	String bank_code;
+	
+	@SerializedName("bank_name")
+	String bank_name;
+	
+	@SerializedName("card_code")
+	String card_code;
+	
 	@SerializedName("card_name")
 	String card_name;
 	
 	@SerializedName("card_quota")
 	int card_quota;
+	
+	@SerializedName("vbank_code")
+	String vbank_code;
 	
 	@SerializedName("vbank_name")
 	String vbank_name;
@@ -128,6 +140,18 @@ public class Payment {
 		return apply_num;
 	}
 
+	public String getBankCode() {
+		return bank_code;
+	}
+	
+	public String getBankName() {
+		return bank_name;
+	}
+	
+	public String getCardCode() {
+		return card_code;
+	}
+	
 	public String getCardName() {
 		return card_name;
 	}
@@ -136,6 +160,10 @@ public class Payment {
 		return card_quota;
 	}
 
+	public String getVbankCode() {
+		return vbank_code;
+	}
+	
 	public String getVbankName() {
 		return vbank_name;
 	}

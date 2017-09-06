@@ -18,6 +18,7 @@ import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
+import com.siot.IamportRestClient.response.PaymentBalance;
 import com.siot.IamportRestClient.response.PaymentCancelDetail;
 
 /**
@@ -39,6 +40,13 @@ public class IamportRestTest {
 		IamportResponse<AccessToken> auth_response = client.getAuth();
 		assertNotNull(auth_response.getResponse());
 		assertNotNull(auth_response.getResponse().getToken());
+	}
+	
+	@Test
+	public void testPaymentBalanceByImpUid() {
+		String test_imp_uid = "imp_011115679124";
+		IamportResponse<PaymentBalance> payment_response = client.paymentBalanceByImpUid(test_imp_uid);
+		assertNotNull(payment_response.getResponse());
 	}
 	
 	@Test

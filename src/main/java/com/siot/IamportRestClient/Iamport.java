@@ -9,10 +9,11 @@ import com.siot.IamportRestClient.request.OnetimePaymentData;
 import com.siot.IamportRestClient.request.ScheduleData;
 import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.response.AccessToken;
-import com.siot.IamportRestClient.response.Payment;
-import com.siot.IamportRestClient.response.Schedule;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.PagedDataList;
+import com.siot.IamportRestClient.response.Payment;
+import com.siot.IamportRestClient.response.PaymentBalance;
+import com.siot.IamportRestClient.response.Schedule;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -26,6 +27,12 @@ public interface Iamport {
 	@POST("/users/getToken")
 	Call<IamportResponse<AccessToken>> token(
 		@Body AuthData auth);
+	
+	@GET("/payments/{imp_uid}/balance")
+    Call<IamportResponse<PaymentBalance>> balance_by_imp_uid(
+    	@Header("Authorization") String token,
+        @Path("imp_uid") String imp_uid
+    );
 	
 	@GET("/payments/{imp_uid}")
     Call<IamportResponse<Payment>> payment_by_imp_uid(

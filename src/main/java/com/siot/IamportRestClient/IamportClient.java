@@ -16,6 +16,7 @@ import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
+import com.siot.IamportRestClient.response.PaymentBalance;
 import com.siot.IamportRestClient.response.Schedule;
 import com.siot.IamportRestClient.serializer.ScheduleEntrySerializer;
 
@@ -47,6 +48,24 @@ public class IamportClient {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public IamportResponse<PaymentBalance> paymentBalanceByImpUid(String imp_uid) {
+		AccessToken auth = getAuth().getResponse();
+		if ( auth != null ) {
+			Call<IamportResponse<PaymentBalance>> call = this.iamport.balance_by_imp_uid(auth.getToken(), imp_uid);
+			
+			try {
+				Response<IamportResponse<PaymentBalance>> response = call.execute();
+				if ( response.isSuccessful() ) {
+					return response.body();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return null;
