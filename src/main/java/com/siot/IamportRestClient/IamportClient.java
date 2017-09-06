@@ -17,7 +17,9 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
 import com.siot.IamportRestClient.response.PaymentBalance;
+import com.siot.IamportRestClient.response.PaymentBalanceEntry;
 import com.siot.IamportRestClient.response.Schedule;
+import com.siot.IamportRestClient.serializer.BalanceEntrySerializer;
 import com.siot.IamportRestClient.serializer.ScheduleEntrySerializer;
 
 import retrofit2.Call;
@@ -212,6 +214,7 @@ public class IamportClient {
         // Adding custom deserializers
         gsonBuilder.registerTypeAdapter(ScheduleEntry.class, new ScheduleEntrySerializer());
         gsonBuilder.registerTypeAdapter(Schedule.class, new ScheduleEntrySerializer());
+        gsonBuilder.registerTypeAdapter(PaymentBalanceEntry.class, new BalanceEntrySerializer());
         Gson myGson = gsonBuilder.create();
 
         return GsonConverterFactory.create(myGson);

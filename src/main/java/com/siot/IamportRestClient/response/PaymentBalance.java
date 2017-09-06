@@ -1,6 +1,7 @@
 package com.siot.IamportRestClient.response;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -20,27 +21,16 @@ public class PaymentBalance {
 	
 	@SerializedName("discount")
 	Balance discount;
+	
+	@SerializedName("histories")
+	List<PaymentBalanceEntry> histories;
 
 	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public Balance getCashReceipt() {
-		return cash_receipt;
+	public List<PaymentBalanceEntry> getHistories() {
+		return histories;
 	}
 
-	public Balance getPrimary() {
-		return primary;
-	}
-
-	public Balance getSecondary() {
-		return secondary;
-	}
-
-	public Balance getDiscount() {
-		return discount;
-	}
-	
-	
-	
 }
