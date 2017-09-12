@@ -20,6 +20,7 @@ import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
 import com.siot.IamportRestClient.response.PaymentBalance;
 import com.siot.IamportRestClient.response.PaymentCancelDetail;
+import com.siot.IamportRestClient.response.payco.OrderStatus;
 
 /**
  * Unit test for simple App.
@@ -140,6 +141,20 @@ public class IamportRestTest {
 		
 		assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
 		System.out.println(payment_response.getMessage());
+	}
+	
+	@Test
+	public void testPaycoUpdateOrderStatus() {
+		String test_api_key = "2966106337421865";
+		String test_api_secret = "rZfEkQvBL6hRaWexFEQQwrrylIHTnSzORPscFYNq54hf1wNHaDyH4ZfqHXj5PTTHJmTokHPpM6FNDsvN";
+		IamportPaycoClient payco = new IamportPaycoClient(test_api_key, test_api_secret);
+		
+		//유효하지 않은 status
+		IamportResponse<OrderStatus> payment_response = payco.updateOrderStatus("imp_436389624339", "asdf");
+		assertNull(payment_response);
+		
+		payment_response = payco.updateOrderStatus("imp_436389624339", "CANCELED");
+		assertEquals(payment_response.getResponse().getStatus(), "CANCELED");
 	}
 	
 //	@Test

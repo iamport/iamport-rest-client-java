@@ -29,11 +29,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class IamportClient {
 
-	private static final String API_URL = "https://api.iamport.kr";
+	public static final String API_URL = "https://api.iamport.kr";
 //	private static final String API_URL = "http://localhost";
-	private String api_key = null;
-	private String api_secret = null;
-	private Iamport iamport = null;
+	protected String api_key = null;
+	protected String api_secret = null;
+	protected Iamport iamport = null;
 	
 	public IamportClient(String api_key, String api_secret) {
 		this.api_key = api_key;
