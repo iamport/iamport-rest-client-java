@@ -1,12 +1,14 @@
 package com.siot.IamportRestClient;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import com.siot.IamportRestClient.request.payco.OrderStatusData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.payco.OrderStatus;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -22,9 +24,15 @@ public class IamportPaycoClient extends IamportClient {
 	}
 	
 	private PaycoImpl createImpl() {
+		OkHttpClient client = new OkHttpClient.Builder()
+									.readTimeout(30, TimeUnit.SECONDS)
+									.connectTimeout(10, TimeUnit.SECONDS)
+									.build();
+		
 		Retrofit retrofit = new Retrofit.Builder()
 								.baseUrl(API_URL)
 								.addConverterFactory(GsonConverterFactory.create())
+								.client(client)
 								.build();
 		
 		return retrofit.create(PaycoImpl.class);

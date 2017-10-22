@@ -2,6 +2,7 @@ package com.siot.IamportRestClient;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,6 +23,7 @@ import com.siot.IamportRestClient.response.Schedule;
 import com.siot.IamportRestClient.serializer.BalanceEntrySerializer;
 import com.siot.IamportRestClient.serializer.ScheduleEntrySerializer;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -200,9 +202,15 @@ public class IamportClient {
 	}
 	
 	protected Iamport create() {
+		OkHttpClient client = new OkHttpClient.Builder()
+				.readTimeout(30, TimeUnit.SECONDS)
+				.connectTimeout(10, TimeUnit.SECONDS)
+				.build();
+		
 		Retrofit retrofit = new Retrofit.Builder()
 								.baseUrl(API_URL)
 								.addConverterFactory(buildGsonConverter())
+								.client(client)
 								.build();
 		
 		return retrofit.create(Iamport.class);
