@@ -8,12 +8,15 @@ import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.request.OnetimePaymentData;
 import com.siot.IamportRestClient.request.ScheduleData;
 import com.siot.IamportRestClient.request.UnscheduleData;
+import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.response.AccessToken;
+import com.siot.IamportRestClient.response.Certification;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
 import com.siot.IamportRestClient.response.PaymentBalance;
 import com.siot.IamportRestClient.response.Schedule;
+import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -74,5 +77,19 @@ public interface Iamport {
 	Call<IamportResponse<List<Schedule>>> unschedule_subscription(
 		@Header("Authorization") String token,
 		@Body UnscheduleData unschedule_data
+	);
+	
+	/* 본인인증 결과 (certification result) */
+	@GET("/certifications/{imp_uid}")
+    Call<IamportResponse<Certification>> certification_by_imp_uid(
+    	@Header("Authorization") String token,
+        @Path("imp_uid") String imp_uid
+    );
+	
+	@POST("/escrows/logis/{imp_uid}")
+	Call<IamportResponse<EscrowLogisInvoice>> post_escrow_logis(
+		@Header("Authorization") String token,
+		@Path("imp_uid") String imp_uid,
+		@Body EscrowLogisData logis_data
 	);
 }

@@ -8,18 +8,24 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
+import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
+import com.siot.IamportRestClient.request.escrow.EscrowLogisPersonData;
 import com.siot.IamportRestClient.response.AccessToken;
+import com.siot.IamportRestClient.response.Certification;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
 import com.siot.IamportRestClient.response.PaymentBalance;
 import com.siot.IamportRestClient.response.PaymentCancelDetail;
+import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
 import com.siot.IamportRestClient.response.payco.OrderStatus;
 
 /**
@@ -155,6 +161,32 @@ public class IamportRestTest {
 		
 		payment_response = payco.updateOrderStatus("imp_436389624339", "CANCELED");
 		assertEquals(payment_response.getResponse().getStatus(), "CANCELED");
+	}
+	
+	@Test
+	public void testCertificationByImpUid() {
+		String test_imp_uid = "imp_339323965143";
+		IamportResponse<Certification> certification_response = client.certificationByImpUid(test_imp_uid);
+		assertNotNull(certification_response.getResponse());
+		assertEquals(test_imp_uid, certification_response.getResponse().getImpUid());
+	}
+	
+	@Test
+	public void testPostEscrowLogis() {
+		String imp_uid = "imp_178851828286";
+		
+		EscrowLogisPersonData sender = new EscrowLogisPersonData("가맹점", "02-1234-1234", "서울 용산구", "12345");
+		EscrowLogisPersonData receiver = new EscrowLogisPersonData("홍길동", "010-1234-5678", "서울 강남구 삼성동", "98765");
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, 2018);
+		cal.set(Calendar.MONTH, Calendar.JANUARY);
+		cal.set(Calendar.DAY_OF_MONTH, 03);
+		
+		EscrowLogisInvoiceData invoice = new EscrowLogisInvoiceData("LOGEN", "123456789", cal.getTime()); //택배사 코드표 : https://github.com/iamport/iamport-manual/blob/master/RESTAPI/logis.md
+		
+		IamportResponse<EscrowLogisInvoice> response = client.postEscrowLogis(imp_uid, new EscrowLogisData(invoice, receiver, sender));
+		assertNotNull(response.getResponse());
 	}
 	
 //	@Test
