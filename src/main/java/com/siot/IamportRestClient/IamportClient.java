@@ -30,6 +30,7 @@ import com.siot.IamportRestClient.serializer.ScheduleEntrySerializer;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
+import retrofit2.HttpException;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -51,9 +52,10 @@ public class IamportClient {
 		Call<IamportResponse<AccessToken>> call = this.iamport.token( new AuthData(this.api_key, this.api_secret) );
 		try {
 			Response<IamportResponse<AccessToken>> response = call.execute();
-			if ( response.isSuccessful() ) {
-				return response.body();
-			}
+			
+			if ( !response.isSuccessful() )	throw new HttpException(response); //200이 아닌 경우에는 throw RuntimeException 
+
+			return response.body();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

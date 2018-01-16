@@ -103,6 +103,7 @@ public class IamportRestTest {
 	public void testCancelPaymentAlreadyCancelledMerchantUid() {
 		String test_already_cancelled_merchant_uid = "merchant_1448280088556";
 		CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
+		cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
 		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
 		
 		assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다

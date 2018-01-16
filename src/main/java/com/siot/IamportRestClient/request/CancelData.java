@@ -27,6 +27,9 @@ public class CancelData {
 	@SerializedName("refund_account")
 	private String refund_account;
 	
+	@SerializedName("escrow_confirmed")
+	private boolean escrow_confirmed;
+	
 	public CancelData(String uid, boolean imp_uid_or_not) {
 		if ( imp_uid_or_not ) {
 			this.imp_uid = uid;
@@ -54,6 +57,10 @@ public class CancelData {
 
 	public void setRefund_account(String refund_account) {
 		this.refund_account = refund_account;
+	}
+
+	public void setEscrowConfirmed(boolean escrow_confirmed) {
+		this.escrow_confirmed = escrow_confirmed;
 	}
 	
 }
