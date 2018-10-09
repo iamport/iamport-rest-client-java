@@ -14,6 +14,7 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
@@ -44,59 +45,143 @@ public class IamportRestTest {
 	
 	@Test
 	public void testGetToken() {
-		IamportResponse<AccessToken> auth_response = client.getAuth();
-		assertNotNull(auth_response.getResponse());
-		assertNotNull(auth_response.getResponse().getToken());
+		try {
+			IamportResponse<AccessToken> auth_response = client.getAuth();
+			
+			assertNotNull(auth_response.getResponse());
+			assertNotNull(auth_response.getResponse().getToken());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
 	}
 	
 	@Test
 	public void testPaymentBalanceByImpUid() {
 		String test_imp_uid = "imp_011115679124";
-		IamportResponse<PaymentBalance> payment_response = client.paymentBalanceByImpUid(test_imp_uid);
-		assertNotNull(payment_response.getResponse());
+		try {
+			IamportResponse<PaymentBalance> payment_response = client.paymentBalanceByImpUid(test_imp_uid);
+			
+			assertNotNull(payment_response.getResponse());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
 	}
 	
 	@Test
 	public void testPaymentByImpUid() {
 		String test_imp_uid = "imp_448280090638";
-		IamportResponse<Payment> payment_response = client.paymentByImpUid(test_imp_uid);
-		assertNotNull(payment_response.getResponse());
-		assertEquals(test_imp_uid, payment_response.getResponse().getImpUid());
+		try {
+			IamportResponse<Payment> payment_response = client.paymentByImpUid(test_imp_uid);
+			
+			assertNotNull(payment_response.getResponse());
+			assertEquals(test_imp_uid, payment_response.getResponse().getImpUid());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
 		
 		String test_imp_uid_cancelled = "imp_138841716839";
-		IamportResponse<Payment> cancelled_response = client.paymentByImpUid(test_imp_uid_cancelled);
-		Payment cancelled = cancelled_response.getResponse();
-		PaymentCancelDetail[] cancelDetail = cancelled.getCancelHistory();
-		
-		assertEquals(cancelDetail.length, 1);
-		assertNotNull(cancelDetail[0].getPgTid());
+		try {
+			IamportResponse<Payment> cancelled_response = client.paymentByImpUid(test_imp_uid_cancelled);
+			
+			Payment cancelled = cancelled_response.getResponse();
+			PaymentCancelDetail[] cancelDetail = cancelled.getCancelHistory();
+			
+			assertEquals(cancelDetail.length, 1);
+			assertNotNull(cancelDetail[0].getPgTid());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
 	}
 	
 	@Test
 	public void testPaymentsByStatusAll() {
-		IamportResponse<PagedDataList<Payment>> r_response = client.paymentsByStatus("ready");
-		IamportResponse<PagedDataList<Payment>> p_response = client.paymentsByStatus("paid");
-		IamportResponse<PagedDataList<Payment>> f_response = client.paymentsByStatus("failed");
-		IamportResponse<PagedDataList<Payment>> c_response = client.paymentsByStatus("cancelled");
-		IamportResponse<PagedDataList<Payment>> all_response = client.paymentsByStatus("all");
-		
-		assertNotNull(all_response.getResponse());
-		assertNotNull(r_response.getResponse());
-		assertNotNull(p_response.getResponse());
-		assertNotNull(f_response.getResponse());
-		assertNotNull(c_response.getResponse());
-		
-		assertTrue(all_response.getResponse().getTotal() == 
+		try {
+			IamportResponse<PagedDataList<Payment>> r_response = client.paymentsByStatus("ready");
+			IamportResponse<PagedDataList<Payment>> p_response = client.paymentsByStatus("paid");
+			IamportResponse<PagedDataList<Payment>> f_response = client.paymentsByStatus("failed");
+			IamportResponse<PagedDataList<Payment>> c_response = client.paymentsByStatus("cancelled");
+			IamportResponse<PagedDataList<Payment>> all_response = client.paymentsByStatus("all");
+			
+			assertNotNull(all_response.getResponse());
+			assertNotNull(r_response.getResponse());
+			assertNotNull(p_response.getResponse());
+			assertNotNull(f_response.getResponse());
+			assertNotNull(c_response.getResponse());
+			
+			assertTrue(all_response.getResponse().getTotal() == 
 					r_response.getResponse().getTotal() + p_response.getResponse().getTotal() + f_response.getResponse().getTotal() + c_response.getResponse().getTotal());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
 	}
 	
 	@Test
 	public void testCancelPaymentAlreadyCancelledImpUid() {
 		String test_already_cancelled_imp_uid = "imp_448280090638";
 		CancelData cancel_data = new CancelData(test_already_cancelled_imp_uid, true); //imp_uid를 통한 전액취소
-		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
 		
-		assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
+		try {
+			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+			
+			assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
+		
 	}
 	
 	@Test
@@ -104,50 +189,123 @@ public class IamportRestTest {
 		String test_already_cancelled_merchant_uid = "merchant_1448280088556";
 		CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
 		cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
-		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
 		
-		assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
-		System.out.println(payment_response.getMessage());
+		try {
+			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+			
+			assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
+			System.out.println(payment_response.getMessage());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}	
 	}
 	
 	@Test
 	public void testPartialCancelPaymentAlreadyCancelledImpUid() {
 		String test_already_cancelled_imp_uid = "imp_448280090638";
 		CancelData cancel_data = new CancelData(test_already_cancelled_imp_uid, true, BigDecimal.valueOf(500)); //imp_uid를 통한 500원 부분취소
-		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
-		
-		assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
-		System.out.println(payment_response.getMessage());
+
+		try {
+			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+			
+			assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
+			System.out.println(payment_response.getMessage());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
 	}
 	
 	@Test
 	public void testPartialCancelPaymentAlreadyCancelledMerchantUid() {
 		String test_already_cancelled_merchant_uid = "merchant_1448280088556";
 		CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false, BigDecimal.valueOf(500)); //merchant_uid를 통한 500원 부분취소
-		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
 		
-		assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
-		System.out.println(payment_response.getMessage());
+		try {
+			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+			
+			assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
+			System.out.println(payment_response.getMessage());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
+		
 	}
 	
 	@Test
 	public void testCancelVbankPaymentAlreadyCancelledImpUid() {
 		String test_already_cancelled_imp_uid = "imp_1416557733458";
 		CancelData cancel_data = new CancelData(test_already_cancelled_imp_uid, true, BigDecimal.valueOf(500)); //imp_uid를 통한 500원 부분취소
-		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
 		
-		assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
-		System.out.println(payment_response.getMessage());
+		try {
+			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+			
+			assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
+			System.out.println(payment_response.getMessage());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
+		
 	}
 	
 	@Test
 	public void testPartialCancelVbankPaymentAlreadyCancelledMerchantUid() {
 		String test_already_cancelled_merchant_uid = "merchant_1416557727868";
 		CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false, BigDecimal.valueOf(500)); //merchant_uid를 통한 500원 부분취소
-		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
 		
-		assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
-		System.out.println(payment_response.getMessage());
+		try {
+			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+			
+			assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
+			System.out.println(payment_response.getMessage());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
+		
 	}
 	
 	@Test
@@ -157,24 +315,52 @@ public class IamportRestTest {
 		IamportPaycoClient payco = new IamportPaycoClient(test_api_key, test_api_secret);
 		
 		//유효하지 않은 status
-		IamportResponse<OrderStatus> payment_response = payco.updateOrderStatus("imp_436389624339", "asdf");
-		assertNull(payment_response);
-		
-		payment_response = payco.updateOrderStatus("imp_436389624339", "CANCELED");
-		assertEquals(payment_response.getResponse().getStatus(), "CANCELED");
+		try {
+			IamportResponse<OrderStatus> payment_response = payco.updateOrderStatus("imp_436389624339", "asdf");
+			assertNull(payment_response);
+			
+			payment_response = payco.updateOrderStatus("imp_436389624339", "CANCELED");
+			assertEquals(payment_response.getResponse().getStatus(), "CANCELED");
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
 	}
 	
 	@Test
 	public void testCertificationByImpUid() {
 		String test_imp_uid = "imp_339323965143";
-		IamportResponse<Certification> certification_response = client.certificationByImpUid(test_imp_uid);
-		assertNotNull(certification_response.getResponse());
-		assertEquals(test_imp_uid, certification_response.getResponse().getImpUid());
+		
+		try {
+			IamportResponse<Certification> certification_response = client.certificationByImpUid(test_imp_uid);
+			
+			assertNotNull(certification_response.getResponse());
+			assertEquals(test_imp_uid, certification_response.getResponse().getImpUid());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
 	}
 	
 	@Test
 	public void testPostEscrowLogis() {
-		String imp_uid = "imp_178851828286";
+		String imp_uid = "imp_205852873956";
 		
 		EscrowLogisPersonData sender = new EscrowLogisPersonData("가맹점", "02-1234-1234", "서울 용산구", "12345");
 		EscrowLogisPersonData receiver = new EscrowLogisPersonData("홍길동", "010-1234-5678", "서울 강남구 삼성동", "98765");
@@ -186,8 +372,12 @@ public class IamportRestTest {
 		
 		EscrowLogisInvoiceData invoice = new EscrowLogisInvoiceData("LOGEN", "123456789", cal.getTime()); //택배사 코드표 : https://github.com/iamport/iamport-manual/blob/master/RESTAPI/logis.md
 		
-		IamportResponse<EscrowLogisInvoice> response = client.postEscrowLogis(imp_uid, new EscrowLogisData(invoice, receiver, sender));
-		assertNotNull(response.getResponse());
+		try {
+			IamportResponse<EscrowLogisInvoice> response = client.postEscrowLogis(imp_uid, new EscrowLogisData(invoice, receiver, sender));
+			assertNotNull(response.getResponse());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 //	@Test

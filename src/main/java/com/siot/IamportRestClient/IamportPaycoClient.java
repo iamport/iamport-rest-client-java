@@ -3,6 +3,7 @@ package com.siot.IamportRestClient;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.payco.OrderStatusData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -10,6 +11,7 @@ import com.siot.IamportRestClient.response.payco.OrderStatus;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
+import retrofit2.HttpException;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -38,7 +40,7 @@ public class IamportPaycoClient extends IamportClient {
 		return retrofit.create(PaycoImpl.class);
 	}
 	
-	public IamportResponse<OrderStatus> updateOrderStatus(String impUid, String status) {
+	public IamportResponse<OrderStatus> updateOrderStatus(String impUid, String status) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			
@@ -46,9 +48,9 @@ public class IamportPaycoClient extends IamportClient {
 			
 			try {
 				Response<IamportResponse<OrderStatus>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

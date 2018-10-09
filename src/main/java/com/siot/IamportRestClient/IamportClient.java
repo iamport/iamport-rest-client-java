@@ -6,6 +6,10 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.AgainPaymentData;
 import com.siot.IamportRestClient.request.AuthData;
 import com.siot.IamportRestClient.request.CancelData;
@@ -48,12 +52,12 @@ public class IamportClient {
 		this.iamport = this.create();
 	}
 	
-	public IamportResponse<AccessToken> getAuth() {
+	public IamportResponse<AccessToken> getAuth() throws IamportResponseException {
 		Call<IamportResponse<AccessToken>> call = this.iamport.token( new AuthData(this.api_key, this.api_secret) );
 		try {
 			Response<IamportResponse<AccessToken>> response = call.execute();
 			
-			if ( !response.isSuccessful() )	throw new HttpException(response); //200이 아닌 경우에는 throw RuntimeException 
+			if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 
 			return response.body();
 		} catch (IOException e) {
@@ -63,16 +67,16 @@ public class IamportClient {
 		return null;
 	}
 	
-	public IamportResponse<PaymentBalance> paymentBalanceByImpUid(String imp_uid) {
+	public IamportResponse<PaymentBalance> paymentBalanceByImpUid(String imp_uid) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<PaymentBalance>> call = this.iamport.balance_by_imp_uid(auth.getToken(), imp_uid);
 			
 			try {
 				Response<IamportResponse<PaymentBalance>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -81,16 +85,16 @@ public class IamportClient {
 		return null;
 	}
 	
-	public IamportResponse<Payment> paymentByImpUid(String imp_uid) {
+	public IamportResponse<Payment> paymentByImpUid(String imp_uid) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), imp_uid);
 			
 			try {
 				Response<IamportResponse<Payment>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -99,16 +103,16 @@ public class IamportClient {
 		return null;
 	}
 	
-	public IamportResponse<PagedDataList<Payment>> paymentsByStatus(String status) {
+	public IamportResponse<PagedDataList<Payment>> paymentsByStatus(String status) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<PagedDataList<Payment>>> call = this.iamport.payments_by_status(auth.getToken(), status);
 			
 			try {
 				Response<IamportResponse<PagedDataList<Payment>>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -117,16 +121,16 @@ public class IamportClient {
 		return null;
 	}
 	
-	public IamportResponse<Payment> cancelPaymentByImpUid(CancelData cancel_data) {
+	public IamportResponse<Payment> cancelPaymentByImpUid(CancelData cancel_data) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<Payment>> call = this.iamport.cancel_payment(auth.getToken(), cancel_data);
 			
 			try {
 				Response<IamportResponse<Payment>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -135,16 +139,16 @@ public class IamportClient {
 		return null;
 	}
 	
-	public IamportResponse<Payment> onetimePayment(OnetimePaymentData onetime_data) {
+	public IamportResponse<Payment> onetimePayment(OnetimePaymentData onetime_data) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<Payment>> call = this.iamport.onetime_payment(auth.getToken(), onetime_data);
 			
 			try {
 				Response<IamportResponse<Payment>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -153,16 +157,16 @@ public class IamportClient {
 		return null;
 	}
 	
-	public IamportResponse<Payment> againPayment(AgainPaymentData again_data) {
+	public IamportResponse<Payment> againPayment(AgainPaymentData again_data) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<Payment>> call = this.iamport.again_payment(auth.getToken(), again_data);
 			
 			try {
 				Response<IamportResponse<Payment>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+					
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -171,16 +175,16 @@ public class IamportClient {
 		return null;
 	}
 	
-	public IamportResponse<List<Schedule>> subscribeSchedule(ScheduleData schedule_data) {
+	public IamportResponse<List<Schedule>> subscribeSchedule(ScheduleData schedule_data) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<List<Schedule>>> call = this.iamport.schedule_subscription(auth.getToken(), schedule_data);
 			
 			try {
 				Response<IamportResponse<List<Schedule>>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -189,16 +193,16 @@ public class IamportClient {
 		return null;
 	}
 	
-	public IamportResponse<List<Schedule>> unsubscribeSchedule(UnscheduleData unschedule_data) {
+	public IamportResponse<List<Schedule>> unsubscribeSchedule(UnscheduleData unschedule_data) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<List<Schedule>>> call = this.iamport.unschedule_subscription(auth.getToken(), unschedule_data);
 			
 			try {
 				Response<IamportResponse<List<Schedule>>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -208,16 +212,16 @@ public class IamportClient {
 	}
 	
 	/* 본인인증 */
-	public IamportResponse<Certification> certificationByImpUid(String imp_uid) {
+	public IamportResponse<Certification> certificationByImpUid(String imp_uid) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<Certification>> call = this.iamport.certification_by_imp_uid(auth.getToken(), imp_uid);
 			
 			try {
 				Response<IamportResponse<Certification>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -227,16 +231,17 @@ public class IamportClient {
 	}
 	
 	/* 에스크로 배송처리 */
-	public IamportResponse<EscrowLogisInvoice> postEscrowLogis(String imp_uid, EscrowLogisData logis_data) {
+	public IamportResponse<EscrowLogisInvoice> postEscrowLogis(String imp_uid, EscrowLogisData logis_data) throws IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
 		if ( auth != null ) {
 			Call<IamportResponse<EscrowLogisInvoice>> call = this.iamport.post_escrow_logis(auth.getToken(), imp_uid, logis_data);
 			
 			try {
 				Response<IamportResponse<EscrowLogisInvoice>> response = call.execute();
-				if ( response.isSuccessful() ) {
-					return response.body();
-				}
+				
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+					
+				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -276,5 +281,21 @@ public class IamportClient {
 
         return GsonConverterFactory.create(myGson);
     }
+	
+	protected String getExceptionMessage(Response<?> response) {
+		String error = null;
+		try {
+			JsonElement element = new JsonParser().parse(response.errorBody().string());
+			error = element.getAsJsonObject().get("message").getAsString();
+		} catch (JsonSyntaxException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if ( error == null )	error = response.message();
+		
+		return error;
+	}
 	
 }
