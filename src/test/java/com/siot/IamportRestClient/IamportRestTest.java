@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,8 @@ import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisPersonData;
+import com.siot.IamportRestClient.request.naver.NaverCancelData;
+import com.siot.IamportRestClient.request.naver.NaverShipData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.Certification;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -27,6 +30,7 @@ import com.siot.IamportRestClient.response.Payment;
 import com.siot.IamportRestClient.response.PaymentBalance;
 import com.siot.IamportRestClient.response.PaymentCancelDetail;
 import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
+import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.payco.OrderStatus;
 
 /**
@@ -35,6 +39,13 @@ import com.siot.IamportRestClient.response.payco.OrderStatus;
 public class IamportRestTest {
 	
 	IamportClient client;
+	
+	private IamportClient getNaverTestClient() {
+		String test_api_key = "5978210787555892";
+		String test_api_secret = "9e75ulp4f9Wwj0i8MSHlKFA9PCTcuMYE15Kvr9AHixeCxwKkpsFa7fkWSd9m0711dLxEV7leEAQc6Bxv";
+		
+		return new IamportClient(test_api_key, test_api_secret);
+	}
 	
 	@Before
 	public void setup() {
@@ -379,6 +390,93 @@ public class IamportRestTest {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	@Test
+	public void testNaverProductOrders() {
+		IamportClient naverClient = getNaverTestClient();
+		
+		String impUid = "imp_630554823245";
+		
+		try {
+			IamportResponse<List<NaverProductOrder>> r = naverClient.naverProductOrders(impUid);
+			List<NaverProductOrder> productOrders = r.getResponse();
+			
+			assertNotNull(productOrders);
+			assertTrue(!productOrders.isEmpty());
+			
+			String productOrderId = productOrders.get(0).getProductOrderId();
+			IamportResponse<NaverProductOrder> rr = naverClient.naverProductOrderSingle(productOrderId);
+			NaverProductOrder firstOrder = rr.getResponse();
+			
+			assertEquals(firstOrder.getProductOrderId(), productOrderId);
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
+	}
+	
+	@Test
+	public void testNaverCancelOrders() {
+		String impUid = "imp_964732188684";
+		NaverCancelData cancelData = new NaverCancelData(NaverCancelData.REASON_SOLD_OUT);
+		
+		IamportClient naverClient = getNaverTestClient();
+		try {
+			IamportResponse<List<NaverProductOrder>> r = naverClient.naverCancelOrders(impUid, cancelData);
+			List<NaverProductOrder> productOrders = r.getResponse();
+			
+			for (NaverProductOrder naverProductOrder : productOrders) {
+				assertEquals(naverProductOrder.getProductOrderStatus(), "CANCELED"); 
+			}
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
+	}
+	
+	@Test
+	public void testNaverShippingOrders() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(2018, 10, 9, 12, 0, 0);
+		
+		String impUid = "imp_964732188684";
+		NaverShipData shippingData = new NaverShipData(NaverShipData.METHOD_DELIVERY, cal.getTime());
+		
+		IamportClient naverClient = getNaverTestClient();
+		try {
+			IamportResponse<List<NaverProductOrder>> r = naverClient.naverShippingOrders(impUid, shippingData);
+			List<NaverProductOrder> productOrders = r.getResponse();
+			
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+			
+			switch(e.getHttpStatusCode()) {
+			case 401 :
+				//TODO
+				break;
+			case 500 :
+				//TODO
+				break;
+			}
+		}
+	}
+
 	
 //	@Test
 //	public void testOnetimePayment() {

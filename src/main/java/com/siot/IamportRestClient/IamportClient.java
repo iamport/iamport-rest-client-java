@@ -19,6 +19,9 @@ import com.siot.IamportRestClient.request.ScheduleEntry;
 import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
+import com.siot.IamportRestClient.request.naver.NaverCancelData;
+import com.siot.IamportRestClient.request.naver.NaverPlaceData;
+import com.siot.IamportRestClient.request.naver.NaverShipData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.Certification;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -28,6 +31,8 @@ import com.siot.IamportRestClient.response.PaymentBalance;
 import com.siot.IamportRestClient.response.PaymentBalanceEntry;
 import com.siot.IamportRestClient.response.Schedule;
 import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
+import com.siot.IamportRestClient.response.naver.NaverProductOrder;
+import com.siot.IamportRestClient.response.naver.NaverReview;
 import com.siot.IamportRestClient.serializer.BalanceEntrySerializer;
 import com.siot.IamportRestClient.serializer.EscrowInvoiceEntrySerializer;
 import com.siot.IamportRestClient.serializer.ScheduleEntrySerializer;
@@ -241,6 +246,121 @@ public class IamportClient {
 				
 				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 					
+				return response.body();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+	/* 네이버페이 관련 API */
+	public IamportResponse<List<NaverProductOrder>> naverProductOrders(String impUid) throws IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		if ( auth != null ) {
+			Call<IamportResponse<List<NaverProductOrder>>> call = this.iamport.naver_product_orders(auth.getToken(), impUid);
+			
+			try {
+				Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+				
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
+				return response.body();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+	public IamportResponse<NaverProductOrder> naverProductOrderSingle(String productOrderId) throws IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		if ( auth != null ) {
+			Call<IamportResponse<NaverProductOrder>> call = this.iamport.naver_single_product_order(auth.getToken(), productOrderId);
+			
+			try {
+				Response<IamportResponse<NaverProductOrder>> response = call.execute();
+				
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
+				return response.body();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+	public IamportResponse<List<NaverReview>> naverReviews() throws IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		if ( auth != null ) {
+			Call<IamportResponse<List<NaverReview>>> call = this.iamport.naver_reviews(auth.getToken());
+			
+			try {
+				Response<IamportResponse<List<NaverReview>>> response = call.execute();
+				
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
+				return response.body();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+	public IamportResponse<List<NaverProductOrder>> naverCancelOrders(String impUid, NaverCancelData cancelData) throws IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		if ( auth != null ) {
+			Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_cancel(auth.getToken(), impUid, cancelData);
+			
+			try {
+				Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+				
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
+				return response.body();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+	public IamportResponse<List<NaverProductOrder>> naverShippingOrders(String impUid, NaverShipData shippingData) throws IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		if ( auth != null ) {
+			Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_ship(auth.getToken(), impUid, shippingData);
+			
+			try {
+				Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+				
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
+				return response.body();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+	public IamportResponse<List<NaverProductOrder>> naverPlaceOrders(String impUid, NaverPlaceData placeData) throws IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		if ( auth != null ) {
+			Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_place(auth.getToken(), impUid, placeData);
+			
+			try {
+				Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+				
+				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+				
 				return response.body();
 			} catch (IOException e) {
 				e.printStackTrace();
