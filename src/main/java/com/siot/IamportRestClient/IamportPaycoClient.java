@@ -40,23 +40,14 @@ public class IamportPaycoClient extends IamportClient {
 		return retrofit.create(PaycoImpl.class);
 	}
 	
-	public IamportResponse<OrderStatus> updateOrderStatus(String impUid, String status) throws IamportResponseException {
+	public IamportResponse<OrderStatus> updateOrderStatus(String impUid, String status) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			
-			Call<IamportResponse<OrderStatus>> call = this.paycoImpl.updateStatus(auth.getToken(), impUid, new OrderStatusData(status));
-			
-			try {
-				Response<IamportResponse<OrderStatus>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<OrderStatus>> call = this.paycoImpl.updateStatus(auth.getToken(), impUid, new OrderStatusData(status));
 		
-		return null;
+		Response<IamportResponse<OrderStatus>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
 	}
 
 }

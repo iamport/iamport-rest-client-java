@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -72,6 +73,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			//서버 연결 실패
+			e.printStackTrace();
 		}
 	}
 	
@@ -93,6 +97,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -115,6 +122,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		String test_imp_uid_cancelled = "imp_138841716839";
@@ -137,6 +147,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -168,6 +181,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -191,6 +207,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
@@ -217,6 +236,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}	
 	}
 	
@@ -241,6 +263,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -265,6 +290,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
@@ -290,6 +318,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
@@ -315,6 +346,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
@@ -343,6 +377,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -366,6 +403,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -388,6 +428,9 @@ public class IamportRestTest {
 			assertNotNull(response.getResponse());
 		} catch (IamportResponseException e) {
 			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -420,6 +463,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -447,6 +493,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -474,6 +523,9 @@ public class IamportRestTest {
 				//TODO
 				break;
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

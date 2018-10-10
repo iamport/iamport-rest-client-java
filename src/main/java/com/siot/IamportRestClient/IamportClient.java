@@ -57,317 +57,183 @@ public class IamportClient {
 		this.iamport = this.create();
 	}
 	
-	public IamportResponse<AccessToken> getAuth() throws IamportResponseException {
+	public IamportResponse<AccessToken> getAuth() throws IamportResponseException, IOException {
 		Call<IamportResponse<AccessToken>> call = this.iamport.token( new AuthData(this.api_key, this.api_secret) );
-		try {
-			Response<IamportResponse<AccessToken>> response = call.execute();
-			
-			if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		Response<IamportResponse<AccessToken>> response = call.execute();
+		
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 
-			return response.body();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+		return response.body();
 	}
 	
-	public IamportResponse<PaymentBalance> paymentBalanceByImpUid(String imp_uid) throws IamportResponseException {
+	public IamportResponse<PaymentBalance> paymentBalanceByImpUid(String imp_uid) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<PaymentBalance>> call = this.iamport.balance_by_imp_uid(auth.getToken(), imp_uid);
-			
-			try {
-				Response<IamportResponse<PaymentBalance>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<PaymentBalance>> call = this.iamport.balance_by_imp_uid(auth.getToken(), imp_uid);
 		
-		return null;
+		Response<IamportResponse<PaymentBalance>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		
+		return response.body();
 	}
 	
-	public IamportResponse<Payment> paymentByImpUid(String imp_uid) throws IamportResponseException {
+	public IamportResponse<Payment> paymentByImpUid(String imp_uid) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), imp_uid);
+		Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), imp_uid);
 			
-			try {
-				Response<IamportResponse<Payment>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 		
-		return null;
+		return response.body();
 	}
 	
-	public IamportResponse<PagedDataList<Payment>> paymentsByStatus(String status) throws IamportResponseException {
+	public IamportResponse<PagedDataList<Payment>> paymentsByStatus(String status) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<PagedDataList<Payment>>> call = this.iamport.payments_by_status(auth.getToken(), status);
-			
-			try {
-				Response<IamportResponse<PagedDataList<Payment>>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<PagedDataList<Payment>>> call = this.iamport.payments_by_status(auth.getToken(), status);
 		
-		return null;
+		Response<IamportResponse<PagedDataList<Payment>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		
+		return response.body();
 	}
 	
-	public IamportResponse<Payment> cancelPaymentByImpUid(CancelData cancel_data) throws IamportResponseException {
+	public IamportResponse<Payment> cancelPaymentByImpUid(CancelData cancel_data) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<Payment>> call = this.iamport.cancel_payment(auth.getToken(), cancel_data);
+		Call<IamportResponse<Payment>> call = this.iamport.cancel_payment(auth.getToken(), cancel_data);
 			
-			try {
-				Response<IamportResponse<Payment>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return null;
+		return response.body();
 	}
 	
-	public IamportResponse<Payment> onetimePayment(OnetimePaymentData onetime_data) throws IamportResponseException {
+	public IamportResponse<Payment> onetimePayment(OnetimePaymentData onetime_data) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<Payment>> call = this.iamport.onetime_payment(auth.getToken(), onetime_data);
+		Call<IamportResponse<Payment>> call = this.iamport.onetime_payment(auth.getToken(), onetime_data);
 			
-			try {
-				Response<IamportResponse<Payment>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return null;
+		return response.body();
 	}
 	
-	public IamportResponse<Payment> againPayment(AgainPaymentData again_data) throws IamportResponseException {
+	public IamportResponse<Payment> againPayment(AgainPaymentData again_data) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<Payment>> call = this.iamport.again_payment(auth.getToken(), again_data);
+		Call<IamportResponse<Payment>> call = this.iamport.again_payment(auth.getToken(), again_data);
 			
-			try {
-				Response<IamportResponse<Payment>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-					
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return null;
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+			
+		return response.body();
 	}
 	
-	public IamportResponse<List<Schedule>> subscribeSchedule(ScheduleData schedule_data) throws IamportResponseException {
+	public IamportResponse<List<Schedule>> subscribeSchedule(ScheduleData schedule_data) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<List<Schedule>>> call = this.iamport.schedule_subscription(auth.getToken(), schedule_data);
-			
-			try {
-				Response<IamportResponse<List<Schedule>>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<List<Schedule>>> call = this.iamport.schedule_subscription(auth.getToken(), schedule_data);
 		
-		return null;
+		Response<IamportResponse<List<Schedule>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		
+		return response.body();
 	}
 	
-	public IamportResponse<List<Schedule>> unsubscribeSchedule(UnscheduleData unschedule_data) throws IamportResponseException {
+	public IamportResponse<List<Schedule>> unsubscribeSchedule(UnscheduleData unschedule_data) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<List<Schedule>>> call = this.iamport.unschedule_subscription(auth.getToken(), unschedule_data);
-			
-			try {
-				Response<IamportResponse<List<Schedule>>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		Call<IamportResponse<List<Schedule>>> call = this.iamport.unschedule_subscription(auth.getToken(), unschedule_data);
+		
+		Response<IamportResponse<List<Schedule>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return null;
+		return response.body();
 	}
 	
 	/* 본인인증 */
-	public IamportResponse<Certification> certificationByImpUid(String imp_uid) throws IamportResponseException {
+	public IamportResponse<Certification> certificationByImpUid(String imp_uid) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<Certification>> call = this.iamport.certification_by_imp_uid(auth.getToken(), imp_uid);
-			
-			try {
-				Response<IamportResponse<Certification>> response = call.execute();
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<Certification>> call = this.iamport.certification_by_imp_uid(auth.getToken(), imp_uid);
 		
-		return null;
+		Response<IamportResponse<Certification>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
 	}
 	
 	/* 에스크로 배송처리 */
-	public IamportResponse<EscrowLogisInvoice> postEscrowLogis(String imp_uid, EscrowLogisData logis_data) throws IamportResponseException {
+	public IamportResponse<EscrowLogisInvoice> postEscrowLogis(String imp_uid, EscrowLogisData logis_data) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<EscrowLogisInvoice>> call = this.iamport.post_escrow_logis(auth.getToken(), imp_uid, logis_data);
-			
-			try {
-				Response<IamportResponse<EscrowLogisInvoice>> response = call.execute();
-				
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-					
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<EscrowLogisInvoice>> call = this.iamport.post_escrow_logis(auth.getToken(), imp_uid, logis_data);
 		
-		return null;
+		Response<IamportResponse<EscrowLogisInvoice>> response = call.execute();
+		
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+			
+		return response.body();
 	}
 	
 	/* 네이버페이 관련 API */
-	public IamportResponse<List<NaverProductOrder>> naverProductOrders(String impUid) throws IamportResponseException {
+	public IamportResponse<List<NaverProductOrder>> naverProductOrders(String impUid) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<List<NaverProductOrder>>> call = this.iamport.naver_product_orders(auth.getToken(), impUid);
-			
-			try {
-				Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
-				
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<List<NaverProductOrder>>> call = this.iamport.naver_product_orders(auth.getToken(), impUid);
 		
-		return null;
+		Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+		
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		
+		return response.body();
 	}
 	
-	public IamportResponse<NaverProductOrder> naverProductOrderSingle(String productOrderId) throws IamportResponseException {
+	public IamportResponse<NaverProductOrder> naverProductOrderSingle(String productOrderId) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<NaverProductOrder>> call = this.iamport.naver_single_product_order(auth.getToken(), productOrderId);
-			
-			try {
-				Response<IamportResponse<NaverProductOrder>> response = call.execute();
-				
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<NaverProductOrder>> call = this.iamport.naver_single_product_order(auth.getToken(), productOrderId);
 		
-		return null;
+		Response<IamportResponse<NaverProductOrder>> response = call.execute();
+		
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		
+		return response.body();
 	}
 	
-	public IamportResponse<List<NaverReview>> naverReviews() throws IamportResponseException {
+	public IamportResponse<List<NaverReview>> naverReviews() throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<List<NaverReview>>> call = this.iamport.naver_reviews(auth.getToken());
-			
-			try {
-				Response<IamportResponse<List<NaverReview>>> response = call.execute();
-				
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<List<NaverReview>>> call = this.iamport.naver_reviews(auth.getToken());
 		
-		return null;
+		Response<IamportResponse<List<NaverReview>>> response = call.execute();
+		
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		
+		return response.body();
 	}
 	
-	public IamportResponse<List<NaverProductOrder>> naverCancelOrders(String impUid, NaverCancelData cancelData) throws IamportResponseException {
+	public IamportResponse<List<NaverProductOrder>> naverCancelOrders(String impUid, NaverCancelData cancelData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_cancel(auth.getToken(), impUid, cancelData);
-			
-			try {
-				Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
-				
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_cancel(auth.getToken(), impUid, cancelData);
 		
-		return null;
+		Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+		
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		
+		return response.body();
 	}
 	
-	public IamportResponse<List<NaverProductOrder>> naverShippingOrders(String impUid, NaverShipData shippingData) throws IamportResponseException {
+	public IamportResponse<List<NaverProductOrder>> naverShippingOrders(String impUid, NaverShipData shippingData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_ship(auth.getToken(), impUid, shippingData);
-			
-			try {
-				Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
-				
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_ship(auth.getToken(), impUid, shippingData);
 		
-		return null;
+		Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+		
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		
+		return response.body();
 	}
 	
-	public IamportResponse<List<NaverProductOrder>> naverPlaceOrders(String impUid, NaverPlaceData placeData) throws IamportResponseException {
+	public IamportResponse<List<NaverProductOrder>> naverPlaceOrders(String impUid, NaverPlaceData placeData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		if ( auth != null ) {
-			Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_place(auth.getToken(), impUid, placeData);
-			
-			try {
-				Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
-				
-				if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
-				
-				return response.body();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_place(auth.getToken(), impUid, placeData);
 		
-		return null;
+		Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+		
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+		
+		return response.body();
 	}
 	
 	protected Iamport create() {
