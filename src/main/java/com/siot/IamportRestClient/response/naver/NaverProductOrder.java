@@ -1,5 +1,7 @@
 package com.siot.IamportRestClient.response.naver;
 
+import java.util.Date;
+
 import com.google.gson.annotations.SerializedName;
 
 public class NaverProductOrder {
@@ -36,6 +38,12 @@ public class NaverProductOrder {
 	
 	@SerializedName("shipping_address")
 	NaverShippingAddress shipping_address;
+	
+	@SerializedName("shipping_memo")
+	String shipping_memo;
+	
+	@SerializedName("shipping_due")
+	long shipping_due;
 
 	public String getProductOrderId() {
 		return product_order_id;
@@ -79,6 +87,14 @@ public class NaverProductOrder {
 
 	public NaverShippingAddress getShippingAddress() {
 		return shipping_address;
+	}
+
+	public String getShippingMemo() {
+		return shipping_memo;
+	}
+
+	public Date getShippingDue() {
+		return new Date( shipping_due * 1000L );
 	}
 	
 }
