@@ -30,6 +30,12 @@ public class NaverProductOrder {
 	@SerializedName("product_option_name")
 	String product_option_name;
 	
+	@SerializedName("product_amount")
+	int product_amount;
+	
+	@SerializedName("delivery_amount")
+	int delivery_amount;
+	
 	@SerializedName("quantity")
 	int quantity;
 	
@@ -75,6 +81,14 @@ public class NaverProductOrder {
 
 	public String getProductOptionName() {
 		return product_option_name;
+	}
+
+	public int getProductAmount() {
+		return product_amount;
+	}
+
+	public int getDeliveryAmount() {
+		return delivery_amount;
 	}
 
 	public int getQuantity() {
