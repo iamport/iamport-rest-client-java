@@ -26,6 +26,12 @@ public class Certification {
 	
 	@SerializedName("birth")
 	int birth;
+
+	@SerializedName("phone")
+	String phone;
+
+	@SerializedName("carrier")
+	String carrier;
 	
 	@SerializedName("certified")
 	boolean certified;
@@ -66,6 +72,10 @@ public class Certification {
 	public Date getBirth() {
 		return new Date( birth * 1000L );
 	}
+
+	public String getPhone() { return phone; }
+
+	public String getCarrier() { return carrier; }
 
 	public boolean isCertified() {
 		return certified;
