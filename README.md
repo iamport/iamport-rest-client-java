@@ -29,7 +29,7 @@ pom.xml에 아래의 내용을 추가해주세요.
 	<dependency>
 	    <groupId>com.github.iamport</groupId>
 	    <artifactId>iamport-rest-client-java</artifactId>
-	    <version>0.2.4</version>
+	    <version>0.2.5</version>
 	</dependency>
 </dependencies>
 ```
@@ -66,6 +66,14 @@ pom.xml에 아래의 내용을 추가해주세요.
 - POST /payments/{imp_uid}/naver/cancel
 - POST /payments/{imp_uid}/naver/ship
 - POST /payments/{imp_uid}/naver/place
+
+### 네이버페이 반품처리 관련 API  
+
+- POST /payments/{imp_uid}/naver/request-return
+- POST /payments/{imp_uid}/naver/approve-return
+- POST /payments/{imp_uid}/naver/reject-return
+- POST /payments/{imp_uid}/naver/withhold-return
+- POST /payments/{imp_uid}/naver/resolve-return
 
 ## 0.2.x 마이그레이션  
 API 응답 오류 상황에 대해 명시적으로 Exception 을 발생시킴으로써 에러 핸들링이 가능하도록 수정하였습니다. 
