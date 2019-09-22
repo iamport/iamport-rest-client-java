@@ -22,6 +22,10 @@ public class NaverWithholdReturnData {
     @SerializedName("extra_charge")
     private int extra_charge;
 
+    public NaverWithholdReturnData(String memo) {
+        this.memo = memo;
+    }
+
     public void setProductOrderId(String[] product_order_id) {
         this.product_order_id = product_order_id;
     }

@@ -78,6 +78,15 @@ public class NaverRequestReturnData {
     @SerializedName("tracking_number")
     private String tracking_number;
 
+    public NaverRequestReturnData(String delivery_method) {
+        this(NaverRequestReturnData.REASON_INTENT_CHANGED, delivery_method);
+    }
+
+    public NaverRequestReturnData(String reason, String delivery_method) {
+        this.reason = reason;
+        this.delivery_method = delivery_method;
+    }
+
     public void setProductOrderId(String[] product_order_id) {
         this.product_order_id = product_order_id;
     }

@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.siot.IamportRestClient.request.naver.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,8 +22,6 @@ import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisPersonData;
-import com.siot.IamportRestClient.request.naver.NaverCancelData;
-import com.siot.IamportRestClient.request.naver.NaverShipData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.Certification;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -522,6 +521,143 @@ public class IamportRestTest {
 			case 500 :
 				//TODO
 				break;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testNaverRequestReturnOrders() {
+		String impUid = "imp_964732188684";
+		NaverRequestReturnData requestReturnData = new NaverRequestReturnData(NaverRequestReturnData.DELIVERY_METHOD_RETURN_INDIVIDUAL);
+		requestReturnData.setDeliveryCompany(NaverRequestReturnData.DELIVERY_COMPANY_CH1); //기타 택배
+		requestReturnData.setTrackingNumber("1234123412341234");
+
+		IamportClient naverClient = getNaverTestClient();
+		try {
+			IamportResponse<List<NaverProductOrder>> r = naverClient.naverRequestReturnOrders(impUid, requestReturnData);
+			List<NaverProductOrder> productOrders = r.getResponse();
+
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+
+			switch(e.getHttpStatusCode()) {
+				case 401 :
+					//TODO
+					break;
+				case 500 :
+					//TODO
+					break;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testNaverApproveReturnOrders() {
+		String impUid = "imp_964732188684";
+		NaverApproveReturnData approveReturnData = new NaverApproveReturnData();
+
+		IamportClient naverClient = getNaverTestClient();
+		try {
+			IamportResponse<List<NaverProductOrder>> r = naverClient.naverApproveReturnOrders(impUid, approveReturnData);
+			List<NaverProductOrder> productOrders = r.getResponse();
+
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+
+			switch(e.getHttpStatusCode()) {
+				case 401 :
+					//TODO
+					break;
+				case 500 :
+					//TODO
+					break;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testNaverRejectReturnOrders() {
+		String impUid = "imp_964732188684";
+		NaverRejectReturnData rejectReturnData = new NaverRejectReturnData("죄송합니다만, 주문제작 상품이라 반품이 불가능합니다.");
+
+		IamportClient naverClient = getNaverTestClient();
+		try {
+			IamportResponse<List<NaverProductOrder>> r = naverClient.naverRejectReturnOrders(impUid, rejectReturnData);
+			List<NaverProductOrder> productOrders = r.getResponse();
+
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+
+			switch(e.getHttpStatusCode()) {
+				case 401 :
+					//TODO
+					break;
+				case 500 :
+					//TODO
+					break;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testNaverWithholdReturnOrders() {
+		String impUid = "imp_964732188684";
+		NaverWithholdReturnData withholdReturnData = new NaverWithholdReturnData("내부 확인 중에 있으니 곧 안내드리겠습니다.");
+
+		IamportClient naverClient = getNaverTestClient();
+		try {
+			IamportResponse<List<NaverProductOrder>> r = naverClient.naverWithholdReturnOrders(impUid, withholdReturnData);
+			List<NaverProductOrder> productOrders = r.getResponse();
+
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+
+			switch(e.getHttpStatusCode()) {
+				case 401 :
+					//TODO
+					break;
+				case 500 :
+					//TODO
+					break;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testNaverResolveReturnOrders() {
+		String impUid = "imp_964732188684";
+		NaverResolveReturnData resolveReturnData = new NaverResolveReturnData();
+
+		IamportClient naverClient = getNaverTestClient();
+		try {
+			IamportResponse<List<NaverProductOrder>> r = naverClient.naverResolveReturnOrders(impUid, resolveReturnData);
+			List<NaverProductOrder> productOrders = r.getResponse();
+
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+
+			switch(e.getHttpStatusCode()) {
+				case 401 :
+					//TODO
+					break;
+				case 500 :
+					//TODO
+					break;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

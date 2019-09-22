@@ -10,6 +10,10 @@ public class NaverRejectReturnData {
     @SerializedName("memo")
     private String memo;
 
+    public NaverRejectReturnData(String memo) {
+        this.memo = memo;
+    }
+
     public void setProductOrderId(String[] product_order_id) {
         this.product_order_id = product_order_id;
     }
