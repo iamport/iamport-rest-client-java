@@ -9,9 +9,7 @@ import com.siot.IamportRestClient.request.OnetimePaymentData;
 import com.siot.IamportRestClient.request.ScheduleData;
 import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
-import com.siot.IamportRestClient.request.naver.NaverCancelData;
-import com.siot.IamportRestClient.request.naver.NaverPlaceData;
-import com.siot.IamportRestClient.request.naver.NaverShipData;
+import com.siot.IamportRestClient.request.naver.*;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.Certification;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -134,5 +132,40 @@ public interface Iamport {
 		@Header("Authorization") String token,
 		@Path("imp_uid") String imp_uid,
 		@Body NaverPlaceData naver_place_data
+	);
+
+	@POST("/payments/{imp_uid}/naver/request-return")
+	Call<IamportResponse<List<NaverProductOrder>>> naver_request_return(
+			@Header("Authorization") String token,
+			@Path("imp_uid") String imp_uid,
+			@Body NaverRequestReturnData naver_request_return_data
+	);
+
+	@POST("/payments/{imp_uid}/naver/approve-return")
+	Call<IamportResponse<List<NaverProductOrder>>> naver_approve_return(
+			@Header("Authorization") String token,
+			@Path("imp_uid") String imp_uid,
+			@Body NaverApproveReturnData naver_approve_return_data
+	);
+
+	@POST("/payments/{imp_uid}/naver/reject-return")
+	Call<IamportResponse<List<NaverProductOrder>>> naver_reject_return(
+			@Header("Authorization") String token,
+			@Path("imp_uid") String imp_uid,
+			@Body NaverRejectReturnData naver_reject_return_data
+	);
+
+	@POST("/payments/{imp_uid}/naver/withhold-return")
+	Call<IamportResponse<List<NaverProductOrder>>> naver_withhold_return(
+			@Header("Authorization") String token,
+			@Path("imp_uid") String imp_uid,
+			@Body NaverWithholdReturnData naver_withhold_return_data
+	);
+
+	@POST("/payments/{imp_uid}/naver/resolve-return")
+	Call<IamportResponse<List<NaverProductOrder>>> naver_resolve_return(
+			@Header("Authorization") String token,
+			@Path("imp_uid") String imp_uid,
+			@Body NaverResolveReturnData naver_resolve_return_data
 	);
 }
