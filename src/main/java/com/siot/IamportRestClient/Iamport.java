@@ -10,13 +10,7 @@ import com.siot.IamportRestClient.request.ScheduleData;
 import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.naver.*;
-import com.siot.IamportRestClient.response.AccessToken;
-import com.siot.IamportRestClient.response.Certification;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.PagedDataList;
-import com.siot.IamportRestClient.response.Payment;
-import com.siot.IamportRestClient.response.PaymentBalance;
-import com.siot.IamportRestClient.response.Schedule;
+import com.siot.IamportRestClient.response.*;
 import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
 import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.naver.NaverReview;
@@ -80,6 +74,12 @@ public interface Iamport {
 	Call<IamportResponse<List<Schedule>>> unschedule_subscription(
 		@Header("Authorization") String token,
 		@Body UnscheduleData unschedule_data
+	);
+
+	@GET("/subscribe/customers/{customer_uid}")
+	Call<IamportResponse<BillingCustomer>> get_billing_customer(
+			@Header("Authorization") String token,
+			@Path("customer_uid") String customer_uid
 	);
 	
 	/* 본인인증 결과 (certification result) */

@@ -13,7 +13,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.siot.IamportRestClient.constant.CardConstant;
 import com.siot.IamportRestClient.request.naver.*;
+import com.siot.IamportRestClient.response.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,13 +24,6 @@ import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisPersonData;
-import com.siot.IamportRestClient.response.AccessToken;
-import com.siot.IamportRestClient.response.Certification;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.PagedDataList;
-import com.siot.IamportRestClient.response.Payment;
-import com.siot.IamportRestClient.response.PaymentBalance;
-import com.siot.IamportRestClient.response.PaymentCancelDetail;
 import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
 import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.payco.OrderStatus;
@@ -44,6 +39,13 @@ public class IamportRestTest {
 		String test_api_key = "5978210787555892";
 		String test_api_secret = "9e75ulp4f9Wwj0i8MSHlKFA9PCTcuMYE15Kvr9AHixeCxwKkpsFa7fkWSd9m0711dLxEV7leEAQc6Bxv";
 		
+		return new IamportClient(test_api_key, test_api_secret);
+	}
+
+	private IamportClient getBillingTestClient() {
+		String test_api_key = "7544324362787472";
+		String test_api_secret = "9frnPjLAQe3evvAaJl3xLOODfO3yBk7LAy9pRV0H93VEzwPjRSQDHFhWtku5EBRea1E1WEJ6IEKhbAA3";
+
 		return new IamportClient(test_api_key, test_api_secret);
 	}
 	
@@ -432,7 +434,39 @@ public class IamportRestTest {
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Test
+	public void testGetBillingCustomer() {
+		IamportClient billingClient = getBillingTestClient();
+		String testCustomerUid = "customer_1234";
+
+		try {
+			IamportResponse<BillingCustomer> billingCustomerResponse = billingClient.getBillingCustomer(testCustomerUid);
+
+			BillingCustomer billingCustomer = billingCustomerResponse.getResponse();
+
+			assertEquals(billingCustomer.getCardCode(), CardConstant.CODE_SHINHAN);
+			assertEquals(billingCustomer.getPgProvider(), "nice");
+			assertNotNull(billingCustomer.getCardNumber());
+			assertNotNull(billingCustomer.getCardName());
+
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+
+			switch(e.getHttpStatusCode()) {
+				case 401 :
+					//TODO : API credential 이 잘못된 경우
+					break;
+				case 404 :
+					//TODO : customer_uid 에 해당되는 빌링등록정보가 존재하지 않는 경우
+					break;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Test
 	public void testNaverProductOrders() {
 		IamportClient naverClient = getNaverTestClient();

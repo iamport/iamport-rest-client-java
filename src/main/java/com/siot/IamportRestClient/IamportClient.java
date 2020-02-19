@@ -20,14 +20,7 @@ import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
 import com.siot.IamportRestClient.request.naver.*;
-import com.siot.IamportRestClient.response.AccessToken;
-import com.siot.IamportRestClient.response.Certification;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.PagedDataList;
-import com.siot.IamportRestClient.response.Payment;
-import com.siot.IamportRestClient.response.PaymentBalance;
-import com.siot.IamportRestClient.response.PaymentBalanceEntry;
-import com.siot.IamportRestClient.response.Schedule;
+import com.siot.IamportRestClient.response.*;
 import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
 import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.naver.NaverReview;
@@ -164,6 +157,16 @@ public class IamportClient {
 		
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 			
+		return response.body();
+	}
+
+	public IamportResponse<BillingCustomer> getBillingCustomer(String customerUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<BillingCustomer>> call = this.iamport.get_billing_customer(auth.getToken(), customerUid);
+
+		Response<IamportResponse<BillingCustomer>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
 		return response.body();
 	}
 	
