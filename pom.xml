@@ -3,7 +3,7 @@
 
 	<groupId>com.github.iamport</groupId>
 	<artifactId>iamport-rest-client</artifactId>
-	<version>0.2.6</version>
+	<version>0.2.7</version>
 	<packaging>jar</packaging>
 
 	<name>IamportRestClient</name>
@@ -13,7 +13,7 @@
 		<url>https://github.com/iamport/iamport-rest-client-java/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
-	
+
 	<licenses>
 		<license>
 			<name>MIT License</name>
@@ -21,7 +21,7 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
 	<scm>
 		<url>https://github.com/iamport/iamport-rest-client-java</url>
 		<connection>scm:git:https://github.com/iamport/iamport-rest-client-java.git</connection>

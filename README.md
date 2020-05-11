@@ -29,7 +29,7 @@ pom.xml에 아래의 내용을 추가해주세요.
 	<dependency>
 	    <groupId>com.github.iamport</groupId>
 	    <artifactId>iamport-rest-client-java</artifactId>
-	    <version>0.2.6</version>
+	    <version>0.2.7</version>
 	</dependency>
 </dependencies>
 ```
@@ -78,6 +78,26 @@ pom.xml에 아래의 내용을 추가해주세요.
 - POST /payments/{imp_uid}/naver/reject-return
 - POST /payments/{imp_uid}/naver/withhold-return
 - POST /payments/{imp_uid}/naver/resolve-return
+
+## API Client 생성  
+
+### 일반 사용자
+
+```java
+IamportClient client = new IamportClient("{가입한 아임포트 계정의 API key}", "{가입한 아임포트 계정의 API secret}");
+```
+
+### Agency 사용자 (하위가맹점 관리용 계정)
+```java
+IamportClient client = new IamportClient("{가입한 아임포트 계정의 API key}", "{가입한 아임포트 계정의 API secret}", "{하위가맹점 Tier Code}");
+```
+
+또는,
+
+```java
+IamportClient client = new IamportClient("{가입한 아임포트 계정의 API key}", "{가입한 아임포트 계정의 API secret}");
+client.setTierCode("{하위가맹점 Tier Code}");
+```
 
 ## 0.2.x 마이그레이션  
 API 응답 오류 상황에 대해 명시적으로 Exception 을 발생시킴으로써 에러 핸들링이 가능하도록 수정하였습니다. 
