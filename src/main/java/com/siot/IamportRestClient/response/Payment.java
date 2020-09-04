@@ -39,6 +39,9 @@ public class Payment {
 	
 	@SerializedName("card_name")
 	String card_name;
+
+	@SerializedName("card_number")
+	String card_number;
 	
 	@SerializedName("card_quota")
 	int card_quota;
@@ -154,6 +157,10 @@ public class Payment {
 	
 	public String getCardName() {
 		return card_name;
+	}
+
+	public String getCardNumber() {
+		return card_number;
 	}
 
 	public int getCardQuota() {
