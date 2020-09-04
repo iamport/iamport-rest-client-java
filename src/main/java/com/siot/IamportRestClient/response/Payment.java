@@ -15,6 +15,9 @@ public class Payment {
 	
 	@SerializedName("pay_method")
 	String pay_method;
+
+	@SerializedName("channel")
+	String channel;
 	
 	@SerializedName("pg_provider")
 	String pg_provider;
@@ -45,6 +48,9 @@ public class Payment {
 	
 	@SerializedName("card_quota")
 	int card_quota;
+
+	@SerializedName("card_type")
+	int card_type;
 	
 	@SerializedName("vbank_code")
 	String vbank_code;
@@ -60,6 +66,9 @@ public class Payment {
 	
 	@SerializedName("vbank_date")
 	long vbank_date;
+
+	@SerializedName("vbank_issued_at")
+	long vbank_issued_at;
 	
 	@SerializedName("name")
 	String name;
@@ -69,6 +78,9 @@ public class Payment {
 	
 	@SerializedName("cancel_amount")
 	BigDecimal cancel_amount;
+
+	@SerializedName("currency")
+	String currency;
 	
 	@SerializedName("buyer_name")
 	String buyer_name;
@@ -90,6 +102,9 @@ public class Payment {
 	
 	@SerializedName("status")
 	String status;
+
+	@SerializedName("started_at")
+	long started_at;
 	
 	@SerializedName("paid_at")
 	long paid_at;
@@ -114,7 +129,13 @@ public class Payment {
 	
 	@SerializedName("cash_receipt_issued")
 	boolean cash_receipt_issued;
-	
+
+	@SerializedName("customer_uid")
+	String customer_uid;
+
+	@SerializedName("customer_uid_usage")
+	String customer_uid_usage;
+
 	public String getImpUid() {
 		return imp_uid;
 	}
@@ -125,6 +146,10 @@ public class Payment {
 
 	public String getPayMethod() {
 		return pay_method;
+	}
+
+	public String getChannel() {
+		return channel;
 	}
 
 	public String getPgProvider() {
@@ -167,6 +192,10 @@ public class Payment {
 		return card_quota;
 	}
 
+	public int getCardType() {
+		return card_type;
+	}
+
 	public String getVbankCode() {
 		return vbank_code;
 	}
@@ -187,6 +216,10 @@ public class Payment {
 		return new Date( vbank_date * 1000L );
 	}
 
+	public long getVbankIssuedAt() {
+		return vbank_issued_at;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -197,6 +230,10 @@ public class Payment {
 
 	public BigDecimal getCancelAmount() {
 		return cancel_amount;
+	}
+
+	public String getCurrency() {
+		return currency;
 	}
 
 	public String getBuyerName() {
@@ -225,6 +262,9 @@ public class Payment {
 
 	public String getStatus() {
 		return status;
+	}
+	public long getStartedAt() {
+		return started_at;
 	}
 
 	public Date getPaidAt() {
@@ -258,5 +298,12 @@ public class Payment {
 	public boolean isCashReceiptIssued() {
 		return cash_receipt_issued;
 	}
-	
+
+	public String getCustomerUid() {
+		return customer_uid;
+	}
+
+	public String getCustomerUidUsage() {
+		return customer_uid_usage;
+	}
 }
