@@ -14,6 +14,12 @@ public class CancelData {
 	
 	@SerializedName("amount")
 	private BigDecimal amount;
+
+	@SerializedName("tax_free")
+	private BigDecimal tax_free;
+
+	@SerializedName("checksum")
+	private BigDecimal checksum;
 	
 	@SerializedName("reason")
 	private String reason;
@@ -41,6 +47,14 @@ public class CancelData {
 	public CancelData(String uid, boolean imp_uid_or_not, BigDecimal amount) {
 		this(uid, imp_uid_or_not);
 		this.amount = amount;
+	}
+
+	public void setTax_free(BigDecimal tax_free) {
+		this.tax_free = tax_free;
+	}
+
+	public void setChecksum(BigDecimal checksum) {
+		this.checksum = checksum;
 	}
 
 	public void setReason(String reason) {

@@ -212,7 +212,33 @@ public class IamportRestTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	}
+
+	@Test
+	public void testCancelPaymentChecksumByImpUid() {
+		String test_already_cancelled_imp_uid = "imp_448280090638";
+		CancelData cancel_data = new CancelData(test_already_cancelled_imp_uid, true); //imp_uid를 통한 전액취소
+		cancel_data.setChecksum(BigDecimal.valueOf(500)); // checksum 으로 검증 추가
+
+		try {
+			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+
+			assertNull(payment_response.getResponse());
+		} catch (IamportResponseException e) {
+			System.out.println(e.getMessage());
+
+			switch(e.getHttpStatusCode()) {
+				case 401 :
+					//TODO
+					break;
+				case 500 :
+					//TODO
+					break;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
