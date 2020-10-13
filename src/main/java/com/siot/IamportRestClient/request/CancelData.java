@@ -35,6 +35,9 @@ public class CancelData {
 	
 	@SerializedName("escrow_confirmed")
 	private boolean escrow_confirmed;
+
+	@SerializedName("extra")
+	private ExtraRequesterEntry extra;
 	
 	public CancelData(String uid, boolean imp_uid_or_not) {
 		if ( imp_uid_or_not ) {
@@ -76,5 +79,12 @@ public class CancelData {
 	public void setEscrowConfirmed(boolean escrow_confirmed) {
 		this.escrow_confirmed = escrow_confirmed;
 	}
-	
+
+	public ExtraRequesterEntry getExtra() {
+		return extra;
+	}
+
+	public void setExtra(ExtraRequesterEntry extra) {
+		this.extra = extra;
+	}
 }

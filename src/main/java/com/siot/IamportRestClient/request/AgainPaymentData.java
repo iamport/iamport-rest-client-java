@@ -1,112 +1,123 @@
 package com.siot.IamportRestClient.request;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
 public class AgainPaymentData {
 
-	@SerializedName("customer_uid")
-	private String customer_uid;
-	
-	@SerializedName("merchant_uid")
-	private String merchant_uid;
-	
-	@SerializedName("amount")
-	private BigDecimal amount;
-	
-	@SerializedName("vat")
-	private BigDecimal vat;
-	
-	@SerializedName("name")
-	private String name;
-	
-	@SerializedName("buyer_name")
-	private String buyer_name;
-	
-	@SerializedName("buyer_email")
-	private String buyer_email;
-	
-	@SerializedName("buyer_tel")
-	private String buyer_tel;
-	
-	@SerializedName("buyer_addr")
-	private String buyer_addr;
-	
-	@SerializedName("buyer_postcode")
-	private String buyer_postcode;
-	
-	@SerializedName("card_quota")
-	private int card_quota;
+    @SerializedName("customer_uid")
+    private String customer_uid;
 
-	public AgainPaymentData(String customer_uid, String merchant_uid, BigDecimal amount) {
-		this.customer_uid = customer_uid;
-		this.merchant_uid = merchant_uid;
-		this.amount = amount;
-	}
+    @SerializedName("merchant_uid")
+    private String merchant_uid;
 
-	public BigDecimal getVat() {
-		return vat;
-	}
+    @SerializedName("amount")
+    private BigDecimal amount;
 
-	public void setVat(BigDecimal vat) {
-		this.vat = vat;
-	}
+    @SerializedName("vat")
+    private BigDecimal vat;
 
-	public String getName() {
-		return name;
-	}
+    @SerializedName("name")
+    private String name;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @SerializedName("buyer_name")
+    private String buyer_name;
 
-	public String getBuyerName() {
-		return buyer_name;
-	}
+    @SerializedName("buyer_email")
+    private String buyer_email;
 
-	public void setBuyerName(String buyer_name) {
-		this.buyer_name = buyer_name;
-	}
+    @SerializedName("buyer_tel")
+    private String buyer_tel;
 
-	public String getBuyerEmail() {
-		return buyer_email;
-	}
+    @SerializedName("buyer_addr")
+    private String buyer_addr;
 
-	public void setBuyerEmail(String buyer_email) {
-		this.buyer_email = buyer_email;
-	}
+    @SerializedName("buyer_postcode")
+    private String buyer_postcode;
 
-	public String getBuyerTel() {
-		return buyer_tel;
-	}
+    @SerializedName("card_quota")
+    private int card_quota;
 
-	public void setBuyerTel(String buyer_tel) {
-		this.buyer_tel = buyer_tel;
-	}
+    @SerializedName("extra")
+    private ExtraNaverUseCfmEntry extra;
 
-	public String getBuyerAddr() {
-		return buyer_addr;
-	}
+    public AgainPaymentData(String customer_uid, String merchant_uid, BigDecimal amount) {
+        this.customer_uid = customer_uid;
+        this.merchant_uid = merchant_uid;
+        this.amount = amount;
+    }
 
-	public void setBuyerAddr(String buyer_addr) {
-		this.buyer_addr = buyer_addr;
-	}
+    public BigDecimal getVat() {
+        return vat;
+    }
 
-	public String getBuyerPostcode() {
-		return buyer_postcode;
-	}
+    public void setVat(BigDecimal vat) {
+        this.vat = vat;
+    }
 
-	public void setBuyerPostcode(String buyer_postcode) {
-		this.buyer_postcode = buyer_postcode;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getCardQuota() {
-		return card_quota;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCardQuota(int card_quota) {
-		this.card_quota = card_quota;
-	}	
-	
+    public String getBuyerName() {
+        return buyer_name;
+    }
+
+    public void setBuyerName(String buyer_name) {
+        this.buyer_name = buyer_name;
+    }
+
+    public String getBuyerEmail() {
+        return buyer_email;
+    }
+
+    public void setBuyerEmail(String buyer_email) {
+        this.buyer_email = buyer_email;
+    }
+
+    public String getBuyerTel() {
+        return buyer_tel;
+    }
+
+    public void setBuyerTel(String buyer_tel) {
+        this.buyer_tel = buyer_tel;
+    }
+
+    public String getBuyerAddr() {
+        return buyer_addr;
+    }
+
+    public void setBuyerAddr(String buyer_addr) {
+        this.buyer_addr = buyer_addr;
+    }
+
+    public String getBuyerPostcode() {
+        return buyer_postcode;
+    }
+
+    public void setBuyerPostcode(String buyer_postcode) {
+        this.buyer_postcode = buyer_postcode;
+    }
+
+    public int getCardQuota() {
+        return card_quota;
+    }
+
+    public void setCardQuota(int card_quota) {
+        this.card_quota = card_quota;
+    }
+
+    public ExtraNaverUseCfmEntry getExtra() {
+        return extra;
+    }
+
+    public void setExtra(ExtraNaverUseCfmEntry extra) {
+        this.extra = extra;
+    }
 }
