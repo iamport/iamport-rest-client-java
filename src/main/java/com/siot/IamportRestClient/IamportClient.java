@@ -45,27 +45,31 @@ public class IamportClient {
 	protected String apiSecret = null;
 	protected String tierCode = null;
 	protected Iamport iamport = null;
-	private boolean useStaticIP = false;
 
 	public IamportClient(String apiKey, String apiSecret) {
 		this.apiKey = apiKey;
 		this.apiSecret = apiSecret;
-		this.iamport = this.create();
+		this.iamport = this.create(false);
 	}
 
 	public IamportClient(String apiKey, String apiSecret, boolean useStaticIP) {
-		this(apiKey, apiSecret);
-		this.useStaticIP = useStaticIP;
+		this.apiKey = apiKey;
+		this.apiSecret = apiSecret;
+		this.iamport = this.create(useStaticIP);
 	}
 
 	public IamportClient(String apiKey, String apiSecret, String tierCode) {
-		this(apiKey, apiSecret);
+		this.apiKey = apiKey;
+		this.apiSecret = apiSecret;
 		this.tierCode = tierCode;
+		this.iamport = this.create(false);
 	}
 
 	public IamportClient(String apiKey, String apiSecret, String tierCode, boolean useStaticIP) {
-		this(apiKey, apiSecret, tierCode);
-		this.useStaticIP = useStaticIP;
+		this.apiKey = apiKey;
+		this.apiSecret = apiSecret;
+		this.tierCode = tierCode;
+		this.iamport = this.create(useStaticIP);
 	}
 
 	public void setTierCode(String tier_code) {
@@ -316,7 +320,7 @@ public class IamportClient {
 		return response.body();
 	}
 
-	protected Iamport create() {
+	protected Iamport create(boolean useStaticIP) {
 		OkHttpClient client = new OkHttpClient.Builder()
 				.readTimeout(30, TimeUnit.SECONDS)
 				.connectTimeout(10, TimeUnit.SECONDS)
@@ -334,7 +338,7 @@ public class IamportClient {
 				.build();
 
 		Retrofit retrofit = new Retrofit.Builder()
-								.baseUrl(this.useStaticIP ? STATIC_API_URL:API_URL)
+								.baseUrl(useStaticIP ? STATIC_API_URL:API_URL)
 								.addConverterFactory(buildGsonConverter())
 								.client(client)
 								.build();
