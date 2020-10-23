@@ -10,7 +10,8 @@ JAVA 1.7이상의 버전을 요구합니다.
 (dependency관계에 있는 [com.squareup.retrofit2](https://github.com/square/retrofit) 이 JAVA 1.7이상의 버전을 요구합니다)
 
 
-## 설치  
+## 설치
+    
 [JitPack](https://jitpack.io/#iamport/iamport-rest-client-java) 을 통해 maven설정을 하실 수 있습니다.  
 
 pom.xml에 아래의 내용을 추가해주세요. 
@@ -29,10 +30,12 @@ pom.xml에 아래의 내용을 추가해주세요.
 	<dependency>
 	    <groupId>com.github.iamport</groupId>
 	    <artifactId>iamport-rest-client-java</artifactId>
-	    <version>0.2.11</version>
+	    <version>0.2.12</version>
 	</dependency>
 </dependencies>
 ```
+ 
+
 
 ## 구현된 API
 
@@ -98,6 +101,18 @@ IamportClient client = new IamportClient("{가입한 아임포트 계정의 API 
 IamportClient client = new IamportClient("{가입한 아임포트 계정의 API key}", "{가입한 아임포트 계정의 API secret}");
 client.setTierCode("{하위가맹점 Tier Code}");
 ```
+
+## API Client 생성(방화벽 내 사용 환경)  
+사내 보안정책에 의해, 아임포트 REST API 서버 접속을 위해 outbound IP 사전 등록이 필요한 환경에서는 아래 2개의 IP에 대해 방화벽 등록 후 API Client 생성시 useStaticIP(기본값 false) 인자를 true로 지정합니다.  
+(해당 기능은 0.2.12버전부터 제공됩니다.)
+
+- 13.248.182.65
+- 76.223.41.209
+
+```java
+IamportClient client = new IamportClient("{가입한 아임포트 계정의 API key}", "{가입한 아임포트 계정의 API secret}", true);
+```
+
 
 ## 0.2.x 마이그레이션  
 API 응답 오류 상황에 대해 명시적으로 Exception 을 발생시킴으로써 에러 핸들링이 가능하도록 수정하였습니다. 
