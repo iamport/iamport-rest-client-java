@@ -40,28 +40,40 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class IamportClient {
 
 	public static final String API_URL = "https://api.iamport.kr";
-	protected String api_key = null;
-	protected String api_secret = null;
-	protected String tier_code = null;
+	public static final String STATIC_API_URL = "https://static-api.iamport.kr";
+	protected String apiKey = null;
+	protected String apiSecret = null;
+	protected String tierCode = null;
 	protected Iamport iamport = null;
+	private boolean useStaticIP = false;
 
-	public IamportClient(String api_key, String api_secret) {
-		this.api_key = api_key;
-		this.api_secret = api_secret;
+	public IamportClient(String apiKey, String apiSecret) {
+		this.apiKey = apiKey;
+		this.apiSecret = apiSecret;
 		this.iamport = this.create();
 	}
 
-	public IamportClient(String api_key, String api_secret, String tier_code) {
-		this(api_key, api_secret);
-		this.tier_code = tier_code;
+	public IamportClient(String apiKey, String apiSecret, boolean useStaticIP) {
+		this(apiKey, apiSecret);
+		this.useStaticIP = useStaticIP;
+	}
+
+	public IamportClient(String apiKey, String apiSecret, String tierCode) {
+		this(apiKey, apiSecret);
+		this.tierCode = tierCode;
+	}
+
+	public IamportClient(String apiKey, String apiSecret, String tierCode, boolean useStaticIP) {
+		this(apiKey, apiSecret, tierCode);
+		this.useStaticIP = useStaticIP;
 	}
 
 	public void setTierCode(String tier_code) {
-		this.tier_code = tier_code;
+		this.tierCode = tier_code;
 	}
 
 	public IamportResponse<AccessToken> getAuth() throws IamportResponseException, IOException {
-		Call<IamportResponse<AccessToken>> call = this.iamport.token( new AuthData(this.api_key, this.api_secret) );
+		Call<IamportResponse<AccessToken>> call = this.iamport.token( new AuthData(this.apiKey, this.apiSecret) );
 		Response<IamportResponse<AccessToken>> response = call.execute();
 
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -69,9 +81,9 @@ public class IamportClient {
 		return response.body();
 	}
 
-	public IamportResponse<PaymentBalance> paymentBalanceByImpUid(String imp_uid) throws IamportResponseException, IOException {
+	public IamportResponse<PaymentBalance> paymentBalanceByImpUid(String impUid) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<PaymentBalance>> call = this.iamport.balance_by_imp_uid(auth.getToken(), imp_uid);
+		Call<IamportResponse<PaymentBalance>> call = this.iamport.balance_by_imp_uid(auth.getToken(), impUid);
 
 		Response<IamportResponse<PaymentBalance>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -79,9 +91,9 @@ public class IamportClient {
 		return response.body();
 	}
 
-	public IamportResponse<Payment> paymentByImpUid(String imp_uid) throws IamportResponseException, IOException {
+	public IamportResponse<Payment> paymentByImpUid(String impUid) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), imp_uid);
+		Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), impUid);
 
 		Response<IamportResponse<Payment>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -99,9 +111,9 @@ public class IamportClient {
 		return response.body();
 	}
 
-	public IamportResponse<Payment> cancelPaymentByImpUid(CancelData cancel_data) throws IamportResponseException, IOException {
+	public IamportResponse<Payment> cancelPaymentByImpUid(CancelData cancelData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<Payment>> call = this.iamport.cancel_payment(auth.getToken(), cancel_data);
+		Call<IamportResponse<Payment>> call = this.iamport.cancel_payment(auth.getToken(), cancelData);
 
 		Response<IamportResponse<Payment>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -109,9 +121,9 @@ public class IamportClient {
 		return response.body();
 	}
 
-	public IamportResponse<Payment> onetimePayment(OnetimePaymentData onetime_data) throws IamportResponseException, IOException {
+	public IamportResponse<Payment> onetimePayment(OnetimePaymentData onetimeData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<Payment>> call = this.iamport.onetime_payment(auth.getToken(), onetime_data);
+		Call<IamportResponse<Payment>> call = this.iamport.onetime_payment(auth.getToken(), onetimeData);
 
 		Response<IamportResponse<Payment>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -119,9 +131,9 @@ public class IamportClient {
 		return response.body();
 	}
 
-	public IamportResponse<Payment> againPayment(AgainPaymentData again_data) throws IamportResponseException, IOException {
+	public IamportResponse<Payment> againPayment(AgainPaymentData againData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<Payment>> call = this.iamport.again_payment(auth.getToken(), again_data);
+		Call<IamportResponse<Payment>> call = this.iamport.again_payment(auth.getToken(), againData);
 
 		Response<IamportResponse<Payment>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -129,9 +141,9 @@ public class IamportClient {
 		return response.body();
 	}
 
-	public IamportResponse<List<Schedule>> subscribeSchedule(ScheduleData schedule_data) throws IamportResponseException, IOException {
+	public IamportResponse<List<Schedule>> subscribeSchedule(ScheduleData scheduleData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<List<Schedule>>> call = this.iamport.schedule_subscription(auth.getToken(), schedule_data);
+		Call<IamportResponse<List<Schedule>>> call = this.iamport.schedule_subscription(auth.getToken(), scheduleData);
 
 		Response<IamportResponse<List<Schedule>>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -139,9 +151,9 @@ public class IamportClient {
 		return response.body();
 	}
 
-	public IamportResponse<List<Schedule>> unsubscribeSchedule(UnscheduleData unschedule_data) throws IamportResponseException, IOException {
+	public IamportResponse<List<Schedule>> unsubscribeSchedule(UnscheduleData unscheduleData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<List<Schedule>>> call = this.iamport.unschedule_subscription(auth.getToken(), unschedule_data);
+		Call<IamportResponse<List<Schedule>>> call = this.iamport.unschedule_subscription(auth.getToken(), unscheduleData);
 
 		Response<IamportResponse<List<Schedule>>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -150,9 +162,9 @@ public class IamportClient {
 	}
 
 	/* 본인인증 */
-	public IamportResponse<Certification> certificationByImpUid(String imp_uid) throws IamportResponseException, IOException {
+	public IamportResponse<Certification> certificationByImpUid(String impUid) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<Certification>> call = this.iamport.certification_by_imp_uid(auth.getToken(), imp_uid);
+		Call<IamportResponse<Certification>> call = this.iamport.certification_by_imp_uid(auth.getToken(), impUid);
 
 		Response<IamportResponse<Certification>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -161,9 +173,9 @@ public class IamportClient {
 	}
 
 	/* 에스크로 배송처리 */
-	public IamportResponse<EscrowLogisInvoice> postEscrowLogis(String imp_uid, EscrowLogisData logis_data) throws IamportResponseException, IOException {
+	public IamportResponse<EscrowLogisInvoice> postEscrowLogis(String impUid, EscrowLogisData logisData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<EscrowLogisInvoice>> call = this.iamport.post_escrow_logis(auth.getToken(), imp_uid, logis_data);
+		Call<IamportResponse<EscrowLogisInvoice>> call = this.iamport.post_escrow_logis(auth.getToken(), impUid, logisData);
 
 		Response<IamportResponse<EscrowLogisInvoice>> response = call.execute();
 
@@ -312,8 +324,8 @@ public class IamportClient {
 					public okhttp3.Response intercept(Chain chain) throws IOException {
 						Request request = chain.request();
 
-						if (IamportClient.this.tier_code != null) {
-							request = request.newBuilder().addHeader("Tier", IamportClient.this.tier_code).build();
+						if (IamportClient.this.tierCode != null) {
+							request = request.newBuilder().addHeader("Tier", IamportClient.this.tierCode).build();
 						}
 
 						return chain.proceed(request);
@@ -322,7 +334,7 @@ public class IamportClient {
 				.build();
 
 		Retrofit retrofit = new Retrofit.Builder()
-								.baseUrl(API_URL)
+								.baseUrl(this.useStaticIP ? STATIC_API_URL:API_URL)
 								.addConverterFactory(buildGsonConverter())
 								.client(client)
 								.build();
