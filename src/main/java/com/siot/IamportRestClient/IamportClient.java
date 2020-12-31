@@ -10,13 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.request.AgainPaymentData;
-import com.siot.IamportRestClient.request.AuthData;
-import com.siot.IamportRestClient.request.CancelData;
-import com.siot.IamportRestClient.request.OnetimePaymentData;
-import com.siot.IamportRestClient.request.ScheduleData;
-import com.siot.IamportRestClient.request.ScheduleEntry;
-import com.siot.IamportRestClient.request.UnscheduleData;
+import com.siot.IamportRestClient.request.*;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
 import com.siot.IamportRestClient.request.naver.*;
@@ -120,6 +114,26 @@ public class IamportClient {
 		Call<IamportResponse<Payment>> call = this.iamport.cancel_payment(auth.getToken(), cancelData);
 
 		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Prepare> postPrepare(PrepareData prepareData) throws IOException, IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Prepare>> call = this.iamport.post_prepare(auth.getToken(), prepareData);
+
+		Response<IamportResponse<Prepare>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Prepare> getPrepare(String merchantUid) throws IOException, IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Prepare>> call = this.iamport.get_prepare(auth.getToken(), merchantUid);
+
+		Response<IamportResponse<Prepare>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 
 		return response.body();

@@ -2,12 +2,7 @@ package com.siot.IamportRestClient;
 
 import java.util.List;
 
-import com.siot.IamportRestClient.request.AgainPaymentData;
-import com.siot.IamportRestClient.request.AuthData;
-import com.siot.IamportRestClient.request.CancelData;
-import com.siot.IamportRestClient.request.OnetimePaymentData;
-import com.siot.IamportRestClient.request.ScheduleData;
-import com.siot.IamportRestClient.request.UnscheduleData;
+import com.siot.IamportRestClient.request.*;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.naver.*;
 import com.siot.IamportRestClient.response.*;
@@ -50,6 +45,18 @@ public interface Iamport {
 	Call<IamportResponse<Payment>> cancel_payment(
 		@Header("Authorization") String token,
 		@Body CancelData cancel_data
+	);
+
+	@POST("/payments/prepare")
+	Call<IamportResponse<Prepare>> post_prepare(
+		@Header("Authorization") String token,
+		@Body PrepareData prepare_data
+	);
+
+	@GET("/payments/prepare/{merchant_uid}")
+	Call<IamportResponse<Prepare>> get_prepare(
+		@Header("Authorization") String token,
+		@Path("merchant_uid") String merchant_udi
 	);
 	
 	@POST("/subscribe/payments/onetime")

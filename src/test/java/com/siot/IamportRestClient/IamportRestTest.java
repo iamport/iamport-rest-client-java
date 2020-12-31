@@ -14,13 +14,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.siot.IamportRestClient.constant.CardConstant;
+import com.siot.IamportRestClient.request.*;
 import com.siot.IamportRestClient.request.naver.*;
 import com.siot.IamportRestClient.response.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisPersonData;
@@ -740,7 +740,7 @@ public class IamportRestTest {
 //	}
 //	
 //	@Test
-//	public void testAgainPayment() {
+//	public void testAgainPayment() throws IOException, IamportResponseException {
 //		String test_customer_uid = "customer_123456";
 //		CardInfo card = new CardInfo("1234123412341234", "201901", "801231", "00");
 //		OnetimePaymentData onetime_data = new OnetimePaymentData(getRandomMerchantUid(), BigDecimal.valueOf(1004), card);
@@ -749,14 +749,14 @@ public class IamportRestTest {
 //		onetime_data.setBuyerEmail("iamport@siot.do");
 //		onetime_data.setBuyerTel("16705176");
 //		onetime_data.setCustomer_uid(test_customer_uid); //결제 성공 후 customer_123456 라는 customer_uid로 빌링키 등록
-//		
+//
 //		IamportResponse<Payment> payment_response = client.onetimePayment(onetime_data);
 //		assertEquals(payment_response.getResponse().getStatus(), "paid");
-//		
+//
 //		try {
 //			//3초 후 customer_uid로 재결제
 //			Thread.sleep(3000);
-//			
+//
 //			AgainPaymentData again_data = new AgainPaymentData(test_customer_uid, getRandomMerchantUid(), BigDecimal.valueOf(1005));
 //			payment_response = client.againPayment(again_data);
 //			assertEquals(payment_response.getResponse().getStatus(), "paid");
@@ -764,6 +764,17 @@ public class IamportRestTest {
 //			e.printStackTrace();
 //		}
 //	}
+	@Test
+	public void testAgainPayment() throws IOException, IamportResponseException {
+		String test_customer_uid = "customer_123456";
+		CardInfo card = new CardInfo("1234123412341234", "201901", "801231", "00");
+
+		AgainPaymentData again_data = new AgainPaymentData(test_customer_uid, getRandomMerchantUid(), BigDecimal.valueOf(1005));
+		again_data.setExtra(new ExtraNaverUseCfmEntry("20200101"));
+		ExtraNaverUseCfmEntry extra = again_data.getExtra();
+		IamportResponse<Payment> payment_response = client.againPayment(again_data);
+		assertEquals(payment_response.getResponse().getStatus(), "paid");
+	}
 //	
 //	@Test
 //	public void testSubscribeScheduleAndUnschedule() {
