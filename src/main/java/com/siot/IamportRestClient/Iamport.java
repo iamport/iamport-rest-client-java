@@ -56,7 +56,7 @@ public interface Iamport {
 	@GET("/payments/prepare/{merchant_uid}")
 	Call<IamportResponse<Prepare>> get_prepare(
 		@Header("Authorization") String token,
-		@Path("merchant_uid") String merchant_udi
+		@Path("merchant_uid") String merchant_uid
 	);
 	
 	@POST("/subscribe/payments/onetime")
