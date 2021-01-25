@@ -412,13 +412,16 @@ public class IamportRestTest {
 	
 	@Test
 	public void testCertificationByImpUid() {
-		String test_imp_uid = "imp_339323965143";
+//		String test_imp_uid = "imp_339323965143";
+		// origin 검증을 위해 is not null인 imp_uid로 변경
+		String test_imp_uid = "imp_992536806181";
 		
 		try {
 			IamportResponse<Certification> certification_response = client.certificationByImpUid(test_imp_uid);
 			
 			assertNotNull(certification_response.getResponse());
 			assertEquals(test_imp_uid, certification_response.getResponse().getImpUid());
+			assertEquals("http://kicc.iamport.kr/pages/certi", certification_response.getResponse().getOrigin());
 		} catch (IamportResponseException e) {
 			System.out.println(e.getMessage());
 			
