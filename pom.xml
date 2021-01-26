@@ -3,7 +3,7 @@
 
 	<groupId>com.github.iamport</groupId>
 	<artifactId>iamport-rest-client</artifactId>
-	<version>0.2.13</version>
+	<version>0.2.14</version>
 	<packaging>jar</packaging>
 
 	<name>IamportRestClient</name>
