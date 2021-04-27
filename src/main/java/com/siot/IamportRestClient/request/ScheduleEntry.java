@@ -49,25 +49,51 @@ public class ScheduleEntry {
         this.amount = amount;
     }
 
-    public void setOptionalValues(
-            BigDecimal tax_free,
-            String name,
-            String buyer_name,
-            String buyer_email,
-            String buyer_tel,
-            String buyer_addr,
-            String buyer_postcode,
-            String custom_data,
-            String notice_url
-    ) {
+    public void setMerchantUid(String merchant_uid) {
+        this.merchant_uid = merchant_uid;
+    }
+
+    public void setScheduleAt(Date schedule_at) {
+        this.schedule_at = schedule_at;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public void setTaxFree(BigDecimal tax_free) {
         this.tax_free = tax_free;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setBuyerName(String buyer_name) {
         this.buyer_name = buyer_name;
+    }
+
+    public void setBuyerEmail(String buyer_email) {
         this.buyer_email = buyer_email;
+    }
+
+    public void setBuyerTel(String buyer_tel) {
         this.buyer_tel = buyer_tel;
+    }
+
+    public void setBuyerAddr(String buyer_addr) {
         this.buyer_addr = buyer_addr;
+    }
+
+    public void setBuyerPostcode(String buyer_postcode) {
         this.buyer_postcode = buyer_postcode;
+    }
+
+    public void setCustomData(String custom_data) {
         this.custom_data = custom_data;
+    }
+
+    public void setNoticeUrl(String notice_url) {
         this.notice_url = notice_url;
     }
 
