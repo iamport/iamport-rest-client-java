@@ -45,6 +45,9 @@ public class Certification {
 	@SerializedName("unique_in_site")
 	String unique_in_site;
 
+	@SerializedName("origin")
+	String origin;
+
 	public String getImpUid() {
 		return imp_uid;
 	}
@@ -92,5 +95,8 @@ public class Certification {
 	public String getUniqueInSite() {
 		return unique_in_site;
 	}
-	
+
+	public String getOrigin() {
+		return origin;
+	}
 }
