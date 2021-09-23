@@ -279,6 +279,17 @@ public class IamportClient {
 		return response.body();
 	}
 
+	public IamportResponse<EmptyResponse> naverConfirmOrders(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<EmptyResponse>> call = iamport.naver_confirm(auth.getToken(), impUid);
+
+		Response<IamportResponse<EmptyResponse>> response = call.execute();
+
+		if( !response.isSuccessful() ) throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
 	public IamportResponse<List<NaverProductOrder>> naverRequestReturnOrders(String impUid, NaverRequestReturnData requestReturnData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
 		Call<IamportResponse<List<NaverProductOrder>>> call = iamport.naver_request_return(auth.getToken(), impUid, requestReturnData);

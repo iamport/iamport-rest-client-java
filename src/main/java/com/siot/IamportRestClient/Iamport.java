@@ -141,6 +141,12 @@ public interface Iamport {
 		@Body NaverPlaceData naver_place_data
 	);
 
+	@POST("/payments/{imp_uid}/naver/confirm")
+	Call<IamportResponse<EmptyResponse>> naver_confirm(
+			@Header("Authorization") String token,
+			@Path("imp_uid") String imp_uid
+	);
+
 	@POST("/payments/{imp_uid}/naver/request-return")
 	Call<IamportResponse<List<NaverProductOrder>>> naver_request_return(
 			@Header("Authorization") String token,

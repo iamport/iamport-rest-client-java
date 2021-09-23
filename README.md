@@ -78,6 +78,7 @@ pom.xml에 아래의 내용을 추가해주세요.
 - POST /payments/{imp_uid}/naver/cancel
 - POST /payments/{imp_uid}/naver/ship
 - POST /payments/{imp_uid}/naver/place
+- POST /payments/{imp_uid}/naver/confirm
 
 ### 네이버페이 반품처리 관련 API  
 
