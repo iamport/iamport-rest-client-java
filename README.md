@@ -69,6 +69,7 @@ pom.xml에 아래의 내용을 추가해주세요.
 ### 정기결제 고객정보 API
 
 - GET /subscribe/customers/{customer_uid}
+- POST /subscribe/customers/{customer_uid}
 
 ### 네이버페이 주문처리 관련 API  
 
