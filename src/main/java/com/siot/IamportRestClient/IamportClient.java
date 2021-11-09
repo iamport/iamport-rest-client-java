@@ -139,6 +139,16 @@ public class IamportClient {
 		return response.body();
 	}
 
+	public IamportResponse<BillingCustomer> post_billing_customer(String customer_uid, BillingCustomerData billingData) throws IOException, IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<BillingCustomer>> call = this.iamport.post_billing_customer(auth.getToken(), customer_uid, billingData);
+
+		Response<IamportResponse<BillingCustomer>> response = call.execute();
+		if( !response.isSuccessful() ) throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
 	public IamportResponse<Payment> onetimePayment(OnetimePaymentData onetimeData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
 		Call<IamportResponse<Payment>> call = this.iamport.onetime_payment(auth.getToken(), onetimeData);
@@ -275,6 +285,17 @@ public class IamportClient {
 		Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
 
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<EmptyResponse> naverConfirmOrders(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<EmptyResponse>> call = iamport.naver_confirm(auth.getToken(), impUid);
+
+		Response<IamportResponse<EmptyResponse>> response = call.execute();
+
+		if( !response.isSuccessful() ) throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 
 		return response.body();
 	}

@@ -9,124 +9,127 @@ public class Payment {
 
 	@SerializedName("imp_uid")
 	String imp_uid;
-	
+
 	@SerializedName("merchant_uid")
 	String merchant_uid;
-	
+
 	@SerializedName("pay_method")
 	String pay_method;
 
 	@SerializedName("channel")
 	String channel;
-	
+
 	@SerializedName("pg_provider")
 	String pg_provider;
-	
+
+	@SerializedName("emb_pg_provider")
+	String emb_pg_provider;
+
 	@SerializedName("pg_tid")
 	String pg_tid;
-	
+
 	@SerializedName("escrow")
 	boolean escrow;
-	
+
 	@SerializedName("apply_num")
 	String apply_num;
-	
+
 	@SerializedName("bank_code")
 	String bank_code;
-	
+
 	@SerializedName("bank_name")
 	String bank_name;
-	
+
 	@SerializedName("card_code")
 	String card_code;
-	
+
 	@SerializedName("card_name")
 	String card_name;
 
 	@SerializedName("card_number")
 	String card_number;
-	
+
 	@SerializedName("card_quota")
 	int card_quota;
 
 	@SerializedName("card_type")
 	int card_type;
-	
+
 	@SerializedName("vbank_code")
 	String vbank_code;
-	
+
 	@SerializedName("vbank_name")
 	String vbank_name;
-	
+
 	@SerializedName("vbank_num")
 	String vbank_num;
-	
+
 	@SerializedName("vbank_holder")
 	String vbank_holder;
-	
+
 	@SerializedName("vbank_date")
 	long vbank_date;
 
 	@SerializedName("vbank_issued_at")
 	long vbank_issued_at;
-	
+
 	@SerializedName("name")
 	String name;
-	
+
 	@SerializedName("amount")
 	BigDecimal amount;
-	
+
 	@SerializedName("cancel_amount")
 	BigDecimal cancel_amount;
 
 	@SerializedName("currency")
 	String currency;
-	
+
 	@SerializedName("buyer_name")
 	String buyer_name;
-	
+
 	@SerializedName("buyer_email")
 	String buyer_email;
-	
+
 	@SerializedName("buyer_tel")
 	String buyer_tel;
-	
+
 	@SerializedName("buyer_addr")
 	String buyer_addr;
-	
+
 	@SerializedName("buyer_postcode")
 	String buyer_postcode;
-	
+
 	@SerializedName("custom_data")
 	String custom_data;
-	
+
 	@SerializedName("status")
 	String status;
 
 	@SerializedName("started_at")
 	long started_at;
-	
+
 	@SerializedName("paid_at")
 	long paid_at;
-	
+
 	@SerializedName("failed_at")
 	long failed_at;
-	
+
 	@SerializedName("cancelled_at")
 	long cancelled_at;
-	
+
 	@SerializedName("fail_reason")
 	String fail_reason;
-	
+
 	@SerializedName("cancel_reason")
 	String cancel_reason;
-	
+
 	@SerializedName("receipt_url")
 	String receipt_url;
-	
+
 	@SerializedName("cancel_history")
 	PaymentCancelDetail[] cancel_history;
-	
+
 	@SerializedName("cash_receipt_issued")
 	boolean cash_receipt_issued;
 
@@ -139,7 +142,7 @@ public class Payment {
 	public String getImpUid() {
 		return imp_uid;
 	}
-	
+
 	public String getMerchantUid() {
 		return merchant_uid;
 	}
@@ -156,6 +159,10 @@ public class Payment {
 		return pg_provider;
 	}
 
+	public String getEmbPgProvider() {
+        return emb_pg_provider;
+    }
+
 	public String getPgTid() {
 		return pg_tid;
 	}
@@ -171,15 +178,15 @@ public class Payment {
 	public String getBankCode() {
 		return bank_code;
 	}
-	
+
 	public String getBankName() {
 		return bank_name;
 	}
-	
+
 	public String getCardCode() {
 		return card_code;
 	}
-	
+
 	public String getCardName() {
 		return card_name;
 	}
@@ -199,7 +206,7 @@ public class Payment {
 	public String getVbankCode() {
 		return vbank_code;
 	}
-	
+
 	public String getVbankName() {
 		return vbank_name;
 	}

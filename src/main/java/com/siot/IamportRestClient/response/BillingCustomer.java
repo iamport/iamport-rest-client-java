@@ -24,6 +24,9 @@ public class BillingCustomer {
     @SerializedName("card_number")
     String card_number;
 
+    @SerializedName("card_type")
+    String card_type;
+
     @SerializedName("customer_name")
     String customer_name;
 
@@ -67,6 +70,10 @@ public class BillingCustomer {
 
     public String getCardNumber() {
         return card_number;
+    }
+
+    public String getCardType() {
+        return card_type;
     }
 
     public String getCustomerName() {

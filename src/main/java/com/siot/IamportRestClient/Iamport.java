@@ -58,6 +58,13 @@ public interface Iamport {
 		@Header("Authorization") String token,
 		@Path("merchant_uid") String merchant_uid
 	);
+
+	@POST("/subscribe/customers/{customer_uid}")
+	Call<IamportResponse<BillingCustomer>> post_billing_customer(
+		@Header("Authorization") String token,
+		@Path("customer_uid") String customer_uid,
+		@Body BillingCustomerData billing_data
+	);
 	
 	@POST("/subscribe/payments/onetime")
 	Call<IamportResponse<Payment>> onetime_payment(
@@ -139,6 +146,12 @@ public interface Iamport {
 		@Header("Authorization") String token,
 		@Path("imp_uid") String imp_uid,
 		@Body NaverPlaceData naver_place_data
+	);
+
+	@POST("/payments/{imp_uid}/naver/confirm")
+	Call<IamportResponse<EmptyResponse>> naver_confirm(
+			@Header("Authorization") String token,
+			@Path("imp_uid") String imp_uid
 	);
 
 	@POST("/payments/{imp_uid}/naver/request-return")
