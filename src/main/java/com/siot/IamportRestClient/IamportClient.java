@@ -355,6 +355,17 @@ public class IamportClient {
 		return response.body();
 	}
 
+	public IamportResponse<EmptyResponse> naverPoint(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<EmptyResponse>> call = iamport.naver_point(auth.getToken(), impUid);
+
+		Response<IamportResponse<EmptyResponse>> response = call.execute();
+
+		if( !response.isSuccessful() ) throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
 	protected Iamport create(boolean useStaticIP) {
 		OkHttpClient client = new OkHttpClient.Builder()
 				.readTimeout(30, TimeUnit.SECONDS)

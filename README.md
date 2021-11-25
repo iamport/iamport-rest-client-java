@@ -30,7 +30,7 @@ pom.xml에 아래의 내용을 추가해주세요.
 	<dependency>
 	    <groupId>com.github.iamport</groupId>
 	    <artifactId>iamport-rest-client-java</artifactId>
-	    <version>0.2.15</version>
+	    <version>0.2.17</version>
 	</dependency>
 </dependencies>
 ```
@@ -80,6 +80,7 @@ pom.xml에 아래의 내용을 추가해주세요.
 - POST /payments/{imp_uid}/naver/ship
 - POST /payments/{imp_uid}/naver/place
 - POST /payments/{imp_uid}/naver/confirm
+- POST /payments/{imp_uid}/naver/point
 
 ### 네이버페이 반품처리 관련 API  
 
