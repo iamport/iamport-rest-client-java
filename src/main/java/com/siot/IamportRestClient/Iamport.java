@@ -188,4 +188,10 @@ public interface Iamport {
 			@Path("imp_uid") String imp_uid,
 			@Body NaverResolveReturnData naver_resolve_return_data
 	);
+
+	@POST("/payments/{imp_uid}/naver/point")
+	Call<IamportResponse<EmptyResponse>> naver_point(
+			@Header("Authorization") String token,
+			@Path("imp_uid") String imp_uid
+	);
 }
