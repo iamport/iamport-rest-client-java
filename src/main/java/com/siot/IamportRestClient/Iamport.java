@@ -11,11 +11,7 @@ import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.naver.NaverReview;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 public interface Iamport {
 
@@ -57,6 +53,14 @@ public interface Iamport {
 	Call<IamportResponse<Prepare>> get_prepare(
 		@Header("Authorization") String token,
 		@Path("merchant_uid") String merchant_uid
+	);
+
+	@DELETE("/subscribe/customers/{customer_uid}")
+	Call<IamportResponse<BillingCustomer>> delete_billing_customer(
+		@Header("Authorization") String token,
+		@Path("customer_uid") String customer_uid,
+		@Query("reason") String reason,
+		@Query("extra[requester]") String extra
 	);
 
 	@POST("/subscribe/customers/{customer_uid}")
