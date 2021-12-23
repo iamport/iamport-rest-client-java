@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class BillingCustomerData {
 
-    @SerializedName("customer_uid")
-    private String customer_uid;
-
     @SerializedName("pg")
     private String pg;
 
@@ -41,14 +38,9 @@ public class BillingCustomerData {
     private String customer_postcode;
 
     public BillingCustomerData(String customer_uid, String card_number, String expiry, String birth) {
-        this.customer_uid = customer_uid;
         this.card_number = card_number;
         this.expiry = expiry;
         this.birth = birth;
-    }
-
-    public void setCustomerUid(String customer_uid) {
-        this.customer_uid = customer_uid;
     }
 
     public void setPg(String pg) {
@@ -93,10 +85,6 @@ public class BillingCustomerData {
 
     public void setCustomerPostcode(String customer_postcode) {
         this.customer_postcode = customer_postcode;
-    }
-
-    public String getCustomerUid() {
-        return customer_uid;
     }
 
     public String getPg() {
