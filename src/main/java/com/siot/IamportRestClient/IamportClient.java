@@ -139,9 +139,19 @@ public class IamportClient {
 		return response.body();
 	}
 
-	public IamportResponse<BillingCustomer> post_billing_customer(String customer_uid, BillingCustomerData billingData) throws IOException, IamportResponseException {
+	public IamportResponse<BillingCustomer> deleteBillingCustomer(String customerUid, String reason, String extra) throws IOException, IamportResponseException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<BillingCustomer>> call = this.iamport.post_billing_customer(auth.getToken(), customer_uid, billingData);
+		Call<IamportResponse<BillingCustomer>> call = this.iamport.delete_billing_customer(auth.getToken(), customerUid, reason, extra);
+
+		Response<IamportResponse<BillingCustomer>> response = call.execute();
+		if( !response.isSuccessful() ) throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<BillingCustomer> postBillingCustomer(String customerUid, BillingCustomerData billingData) throws IOException, IamportResponseException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<BillingCustomer>> call = this.iamport.post_billing_customer(auth.getToken(), customerUid, billingData);
 
 		Response<IamportResponse<BillingCustomer>> response = call.execute();
 		if( !response.isSuccessful() ) throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
