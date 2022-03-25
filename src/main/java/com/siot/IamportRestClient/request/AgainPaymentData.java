@@ -19,6 +19,9 @@ public class AgainPaymentData {
     @SerializedName("vat")
     private BigDecimal vat;
 
+    @SerializedName("currency")
+    private BigDecimal currency;
+
     @SerializedName("name")
     private String name;
 
@@ -36,6 +39,9 @@ public class AgainPaymentData {
 
     @SerializedName("buyer_postcode")
     private String buyer_postcode;
+
+    @SerializedName("browser_ip")
+    private String browser_ip;
 
     @SerializedName("card_quota")
     private int card_quota;
@@ -119,5 +125,13 @@ public class AgainPaymentData {
 
     public void setExtra(ExtraNaverUseCfmEntry extra) {
         this.extra = extra;
+    }
+
+    public void setBrowser_ip(String browser_ip) {
+        this.browser_ip = browser_ip;
+    }
+
+    public void setCurrency(BigDecimal currency) {
+        this.currency = currency;
     }
 }
