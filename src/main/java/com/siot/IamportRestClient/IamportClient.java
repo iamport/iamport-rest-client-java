@@ -179,6 +179,22 @@ public class IamportClient {
 		return response.body();
 	}
 
+	public IamportResponse<ScheduleList> getPaymentSchedule(GetScheduleData getScheduleData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<ScheduleList>> call = this.iamport.get_payment_schedule(auth.getToken(),
+				getScheduleData.getSchedule_from(),
+				getScheduleData.getSchedule_to(),
+				getScheduleData.getSchedule_status(),
+				getScheduleData.getPage(),
+				getScheduleData.getLimit()
+		);
+
+		Response<IamportResponse<ScheduleList>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
 	public IamportResponse<List<Schedule>> subscribeSchedule(ScheduleData scheduleData) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
 		Call<IamportResponse<List<Schedule>>> call = this.iamport.schedule_subscription(auth.getToken(), scheduleData);
