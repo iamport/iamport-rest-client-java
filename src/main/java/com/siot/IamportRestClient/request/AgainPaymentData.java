@@ -20,7 +20,7 @@ public class AgainPaymentData {
     private BigDecimal vat;
 
     @SerializedName("currency")
-    private BigDecimal currency;
+    private String currency;
 
     @SerializedName("name")
     private String name;
@@ -131,7 +131,7 @@ public class AgainPaymentData {
         this.browser_ip = browser_ip;
     }
 
-    public void setCurrency(BigDecimal currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 }

@@ -19,7 +19,7 @@ public class OnetimePaymentData {
     private String customer_uid;
 
     @SerializedName("currency")
-    private BigDecimal currency;
+    private String currency;
 
     @SerializedName("name")
     private String name;
@@ -108,7 +108,7 @@ public class OnetimePaymentData {
         this.card_quota = card_quota;
     }
 
-    public void setCurrency(BigDecimal currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 
