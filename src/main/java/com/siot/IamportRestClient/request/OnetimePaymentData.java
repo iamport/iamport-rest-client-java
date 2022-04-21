@@ -18,6 +18,9 @@ public class OnetimePaymentData {
     @SerializedName("customer_uid")
     private String customer_uid;
 
+    @SerializedName("pg")
+    private String pg;
+
     @SerializedName("currency")
     private String currency;
 
@@ -78,6 +81,10 @@ public class OnetimePaymentData {
 
     public void setCustomer_uid(String customer_uid) {
         this.customer_uid = customer_uid;
+    }
+
+    public void setPg(String pg) {
+        this.pg = pg;
     }
 
     public void setName(String name) {
