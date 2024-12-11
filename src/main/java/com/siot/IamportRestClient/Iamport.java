@@ -94,6 +94,17 @@ public interface Iamport {
         @Query("limit") int limit
 	);
 
+	@GET("/subscribe/payments/schedule/customers/{customer_uid}")
+	Call<IamportResponse<ScheduleList>> get_payment_schedule_by_customer_uid(
+		@Header("Authorization") String token,
+		@Path("customer_uid") String customer_uid,
+		@Query("from") int from,
+		@Query("to") int to,
+		@Query("schedule-status") String schedule_status,
+		@Query("page") int page,
+		@Query("limit") int limit
+	);
+
 	@POST("/subscribe/payments/schedule")
 	Call<IamportResponse<List<Schedule>>> schedule_subscription(
 		@Header("Authorization") String token,
