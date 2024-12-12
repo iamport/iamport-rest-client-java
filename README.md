@@ -30,7 +30,7 @@ pom.xml에 아래의 내용을 추가해주세요.
 	<dependency>
 	    <groupId>com.github.iamport</groupId>
 	    <artifactId>iamport-rest-client-java</artifactId>
-	    <version>0.2.23</version>
+	    <version>0.2.24</version>
 	</dependency>
 </dependencies>
 ```
@@ -52,6 +52,7 @@ pom.xml에 아래의 내용을 추가해주세요.
 - POST /subscribe/payments/again
 - POST /subscribe/payments/schedule
 - POST /subscribe/payments/unschedule
+- GET /subscribe/payments/schedule/customers/{customer_uid}
 
 ### 결제 사전검증 API
 
