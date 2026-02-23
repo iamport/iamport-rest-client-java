@@ -55,16 +55,19 @@ public class OnetimePaymentData {
     private int card_quota;
 
     @SerializedName("card_number")
-    protected String card_number;
+    private String card_number;
 
     @SerializedName("expiry")
-    protected String expiry;
+    private String expiry;
 
     @SerializedName("birth")
-    protected String birth;
+    private String birth;
 
     @SerializedName("pwd_2digit")
-    protected String pwd_2digit;
+    private String pwd_2digit;
+
+    @SerializedName("cvc")
+    private String cvc;
 
     public OnetimePaymentData(String merchant_uid, BigDecimal amount, CardInfo card) {
         this.merchant_uid = merchant_uid;
@@ -73,6 +76,7 @@ public class OnetimePaymentData {
         this.expiry = card.expiry;
         this.birth = card.birth;
         this.pwd_2digit = card.pwd_2digit;
+        this.cvc = card.cvc;
     }
 
     public void setVat(BigDecimal vat) {

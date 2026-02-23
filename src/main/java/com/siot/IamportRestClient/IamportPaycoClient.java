@@ -18,19 +18,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class IamportPaycoClient extends IamportClient {
 
-	private PaycoImpl paycoImpl;
+	private final PaycoImpl paycoImpl;
 
 	public IamportPaycoClient(String api_key, String api_secret) {
 		super(api_key, api_secret);
-		this.paycoImpl = this.createImpl(false);
+		this.paycoImpl = createImpl(false);
 	}
 
 	public IamportPaycoClient(String api_key, String api_secret, boolean useStaticIP) {
 		super(api_key, api_secret, useStaticIP);
-		this.paycoImpl = this.createImpl(useStaticIP);
+		this.paycoImpl = createImpl(useStaticIP);
 	}
 
-	private PaycoImpl createImpl(boolean useStaticIP) {
+	private static PaycoImpl createImpl(boolean useStaticIP) {
 		OkHttpClient client = new OkHttpClient.Builder()
 									.readTimeout(30, TimeUnit.SECONDS)
 									.connectTimeout(10, TimeUnit.SECONDS)

@@ -23,10 +23,10 @@ public class BalanceEntrySerializer  implements JsonDeserializer<PaymentBalanceE
 			Date createdAt = new Date( unix_time * 1000L );
 			
 			return new PaymentBalanceEntry(
-					(Balance)context.deserialize(obj.get("cash_receipt"), Balance.class),
-					(Balance)context.deserialize(obj.get("primary"), Balance.class),
-					(Balance)context.deserialize(obj.get("secondary"), Balance.class),
-					(Balance)context.deserialize(obj.get("discount"), Balance.class),
+                    context.deserialize(obj.get("cash_receipt"), Balance.class),
+                    context.deserialize(obj.get("primary"), Balance.class),
+                    context.deserialize(obj.get("secondary"), Balance.class),
+                    context.deserialize(obj.get("discount"), Balance.class),
 					createdAt
 					);
 		}

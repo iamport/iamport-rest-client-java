@@ -2,13 +2,10 @@ package com.siot.IamportRestClient.exception;
 
 import retrofit2.HttpException;
 
-public class IamportResponseException extends Exception {
+public final class IamportResponseException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1108159593517976752L;
-	private int httpStatusCode;
+	private final int httpStatusCode;
 	
 	public IamportResponseException(String error, HttpException exception) {
 		super( error, exception );

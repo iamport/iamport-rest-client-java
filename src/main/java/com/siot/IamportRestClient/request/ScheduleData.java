@@ -15,7 +15,7 @@ public class ScheduleData {
 	
 	public ScheduleData(String customer_uid) {
 		this.customer_uid = customer_uid;
-		this.schedules = new ArrayList<ScheduleEntry>();
+		this.schedules = new ArrayList<>();
 	}
 	
 	public void addSchedule(ScheduleEntry entry) {

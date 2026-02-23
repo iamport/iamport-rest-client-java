@@ -10,7 +10,6 @@ import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
 import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.naver.NaverReview;
 
-import org.junit.runners.Parameterized;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -29,7 +28,8 @@ public interface Iamport {
 	@GET("/payments/{imp_uid}")
     Call<IamportResponse<Payment>> payment_by_imp_uid(
     	@Header("Authorization") String token,
-        @Path("imp_uid") String imp_uid
+        @Path("imp_uid") String imp_uid,
+		@Query("include_sandbox") boolean include_sandbox
     );
 
 	@GET("/payments/status/{payment_status}")

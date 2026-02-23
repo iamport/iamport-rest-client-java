@@ -2,9 +2,6 @@ package com.siot.IamportRestClient.request;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 public class ExtraNaverUseCfmEntry {
 
     @SerializedName("naverUseCfm")

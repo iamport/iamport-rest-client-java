@@ -15,7 +15,7 @@ public class UnscheduleData {
 	
 	public UnscheduleData(String customer_uid) {
 		this.customer_uid = customer_uid;
-		this.merchant_uids = new ArrayList<String>();
+		this.merchant_uids = new ArrayList<>();
 	}
 	
 	public void addMerchantUid(String merchant_uid) {

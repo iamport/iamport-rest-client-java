@@ -35,8 +35,8 @@ public class IamportClient {
 
 	public static final String API_URL = "https://api.iamport.kr";
 	public static final String STATIC_API_URL = "https://static-api.iamport.kr";
-	protected String apiKey = null;
-	protected String apiSecret = null;
+	protected String apiKey;
+	protected String apiSecret;
 	protected String tierCode = null;
 	protected Iamport iamport = null;
 
@@ -91,7 +91,17 @@ public class IamportClient {
 
 	public IamportResponse<Payment> paymentByImpUid(String impUid) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), impUid);
+		Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), impUid, false);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Payment> paymentByImpUid(String impUid, boolean includeSandbox) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), impUid, includeSandbox);
 
 		Response<IamportResponse<Payment>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
@@ -440,13 +450,11 @@ public class IamportClient {
 		try {
 			JsonElement element = new JsonParser().parse(response.errorBody().string());
 			error = element.getAsJsonObject().get("message").getAsString();
-		} catch (JsonSyntaxException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (JsonSyntaxException | IOException e) {
 			e.printStackTrace();
 		}
 
-		if ( error == null )	error = response.message();
+        if ( error == null )	error = response.message();
 
 		return error;
 	}
