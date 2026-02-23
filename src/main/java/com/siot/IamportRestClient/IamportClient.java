@@ -91,7 +91,17 @@ public class IamportClient {
 
 	public IamportResponse<Payment> paymentByImpUid(String impUid) throws IamportResponseException, IOException {
 		AccessToken auth = getAuth().getResponse();
-		Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), impUid);
+		Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), impUid, false);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Payment> paymentByImpUid(String impUid, boolean includeSandbox) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.payment_by_imp_uid(auth.getToken(), impUid, includeSandbox);
 
 		Response<IamportResponse<Payment>> response = call.execute();
 		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );

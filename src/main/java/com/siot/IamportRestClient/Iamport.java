@@ -28,7 +28,8 @@ public interface Iamport {
 	@GET("/payments/{imp_uid}")
     Call<IamportResponse<Payment>> payment_by_imp_uid(
     	@Header("Authorization") String token,
-        @Path("imp_uid") String imp_uid
+        @Path("imp_uid") String imp_uid,
+		@Query("include_sandbox") boolean include_sandbox
     );
 
 	@GET("/payments/status/{payment_status}")

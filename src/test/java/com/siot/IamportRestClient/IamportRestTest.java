@@ -25,9 +25,6 @@ import com.siot.IamportRestClient.response.payco.OrderStatus;
 
 import static org.junit.Assert.*;
 
-/**
- * Unit test for simple App.
- */
 public class IamportRestTest {
 
     IamportClient client;
