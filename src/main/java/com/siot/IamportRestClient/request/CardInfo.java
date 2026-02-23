@@ -1,12 +1,12 @@
 package com.siot.IamportRestClient.request;
 
-public class CardInfo {
+public final class CardInfo {
 
-	protected String card_number;
-	protected String expiry;
-	protected String birth;
-	protected String pwd_2digit;
-	protected String cvc;
+	String card_number;
+	String expiry;
+	String birth;
+	String pwd_2digit;
+	String cvc;
 
 	public CardInfo(String card_number, String expiry, String birth, String pwd_2digit) {
 		this.card_number = card_number;

@@ -90,7 +90,7 @@ public class NaverShipData {
 		this.tracking_number = trackingNumber;
 	}
 	
-	private boolean isValidMethod(String method) {
+	private static boolean isValidMethod(String method) {
 		return	METHOD_DELIVERY.equals(method) ||
 				METHOD_GDFW_ISSUE_SVC.equals(method) ||
 				METHOD_VISIT_RECEIPT.equals(method) ||
@@ -99,7 +99,7 @@ public class NaverShipData {
 				METHOD_NOTHING.equals(method);
 	}
 	
-	private boolean isValidCompany(String company) {
+	private static boolean isValidCompany(String company) {
 		return	COMPANY_CJGLS.equals(company) ||
 				COMPANY_KGB.equals(company) ||
 				COMPANY_DONGBU.equals(company) ||

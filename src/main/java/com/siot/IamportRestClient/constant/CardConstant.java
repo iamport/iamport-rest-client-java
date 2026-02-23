@@ -2,6 +2,8 @@ package com.siot.IamportRestClient.constant;
 
 public final class CardConstant {
 
+    private CardConstant() {}
+
     /**
      * 361	BC카드
      * 364	광주카드

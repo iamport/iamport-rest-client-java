@@ -1,10 +1,5 @@
 package com.siot.IamportRestClient;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -27,6 +22,8 @@ import com.siot.IamportRestClient.request.escrow.EscrowLogisPersonData;
 import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
 import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.payco.OrderStatus;
+
+import static org.junit.Assert.*;
 
 /**
  * Unit test for simple App.
@@ -169,8 +166,7 @@ public class IamportRestTest {
             assertNotNull(f_response.getResponse());
             assertNotNull(c_response.getResponse());
 
-            assertTrue(all_response.getResponse().getTotal() ==
-                    r_response.getResponse().getTotal() + p_response.getResponse().getTotal() + f_response.getResponse().getTotal() + c_response.getResponse().getTotal());
+            assertEquals(all_response.getResponse().getTotal(), r_response.getResponse().getTotal() + p_response.getResponse().getTotal() + f_response.getResponse().getTotal() + c_response.getResponse().getTotal());
         } catch (IamportResponseException e) {
             System.out.println(e.getMessage());
 
@@ -392,7 +388,7 @@ public class IamportRestTest {
             assertNull(payment_response);
 
             payment_response = payco.updateOrderStatus("imp_436389624339", "CANCELED");
-            assertEquals(payment_response.getResponse().getStatus(), "CANCELED");
+            assertEquals("CANCELED", payment_response.getResponse().getStatus());
         } catch (IamportResponseException e) {
             System.out.println(e.getMessage());
 
@@ -449,7 +445,7 @@ public class IamportRestTest {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 2018);
         cal.set(Calendar.MONTH, Calendar.JANUARY);
-        cal.set(Calendar.DAY_OF_MONTH, 03);
+        cal.set(Calendar.DAY_OF_MONTH, 3);
 
         EscrowLogisInvoiceData invoice = new EscrowLogisInvoiceData("LOGEN", "123456789", cal.getTime()); //택배사 코드표 : https://github.com/iamport/iamport-manual/blob/master/RESTAPI/logis.md
 
@@ -474,8 +470,8 @@ public class IamportRestTest {
 
             BillingCustomer billingCustomer = billingCustomerResponse.getResponse();
 
-            assertEquals(billingCustomer.getCardCode(), CardConstant.CODE_SHINHAN);
-            assertEquals(billingCustomer.getPgProvider(), "nice");
+            assertEquals(CardConstant.CODE_SHINHAN, billingCustomer.getCardCode());
+            assertEquals("nice", billingCustomer.getPgProvider());
             assertNotNull(billingCustomer.getCardNumber());
             assertNotNull(billingCustomer.getCardName());
 
@@ -507,7 +503,7 @@ public class IamportRestTest {
             List<NaverProductOrder> productOrders = r.getResponse();
 
             assertNotNull(productOrders);
-            assertTrue(!productOrders.isEmpty());
+            assertFalse(productOrders.isEmpty());
 
             String productOrderId = productOrders.get(0).getProductOrderId();
             IamportResponse<NaverProductOrder> rr = naverClient.naverProductOrderSingle(productOrderId);
@@ -542,7 +538,7 @@ public class IamportRestTest {
             List<NaverProductOrder> productOrders = r.getResponse();
 
             for (NaverProductOrder naverProductOrder : productOrders) {
-                assertEquals(naverProductOrder.getProductOrderStatus(), "CANCELED");
+                assertEquals("CANCELED", naverProductOrder.getProductOrderStatus());
             }
         } catch (IamportResponseException e) {
             System.out.println(e.getMessage());
@@ -564,7 +560,7 @@ public class IamportRestTest {
     @Test
     public void testNaverShippingOrders() {
         Calendar cal = Calendar.getInstance();
-        cal.set(2018, 10, 9, 12, 0, 0);
+        cal.set(2018, Calendar.NOVEMBER, 9, 12, 0, 0);
 
         String impUid = "imp_964732188684";
         NaverShipData shippingData = new NaverShipData(NaverShipData.METHOD_DELIVERY, cal.getTime());
@@ -776,7 +772,7 @@ public class IamportRestTest {
         again_data.setExtra(new ExtraNaverUseCfmEntry("20200101"));
         ExtraNaverUseCfmEntry extra = again_data.getExtra();
         IamportResponse<Payment> payment_response = client.againPayment(again_data);
-        assertEquals(payment_response.getResponse().getStatus(), "paid");
+        assertEquals("paid", payment_response.getResponse().getStatus());
     }
 
     @Test

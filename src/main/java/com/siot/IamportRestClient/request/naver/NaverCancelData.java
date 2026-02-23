@@ -28,7 +28,7 @@ public class NaverCancelData {
 		this.product_order_id = product_order_id;
 	}
 	
-	private boolean isValidReason(String reason) {
+	private static boolean isValidReason(String reason) {
 		return	REASON_SOLD_OUT.equals(reason)            ||
 				REASON_DELAYED_DELIVERY.equals(reason)    ||
 				REASON_PRODUCT_UNSATISFIED.equals(reason) ||

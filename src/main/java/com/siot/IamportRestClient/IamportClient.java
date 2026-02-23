@@ -35,8 +35,8 @@ public class IamportClient {
 
 	public static final String API_URL = "https://api.iamport.kr";
 	public static final String STATIC_API_URL = "https://static-api.iamport.kr";
-	protected String apiKey = null;
-	protected String apiSecret = null;
+	protected String apiKey;
+	protected String apiSecret;
 	protected String tierCode = null;
 	protected Iamport iamport = null;
 
@@ -440,13 +440,11 @@ public class IamportClient {
 		try {
 			JsonElement element = new JsonParser().parse(response.errorBody().string());
 			error = element.getAsJsonObject().get("message").getAsString();
-		} catch (JsonSyntaxException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (JsonSyntaxException | IOException e) {
 			e.printStackTrace();
 		}
 
-		if ( error == null )	error = response.message();
+        if ( error == null )	error = response.message();
 
 		return error;
 	}
