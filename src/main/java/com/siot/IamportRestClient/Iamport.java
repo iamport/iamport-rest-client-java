@@ -10,7 +10,6 @@ import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
 import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.naver.NaverReview;
 
-import org.junit.runners.Parameterized;
 import retrofit2.Call;
 import retrofit2.http.*;
 
