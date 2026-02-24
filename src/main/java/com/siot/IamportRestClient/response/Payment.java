@@ -28,6 +28,9 @@ public class Payment {
 	@SerializedName("pg_tid")
 	String pg_tid;
 
+	@SerializedName("pg_id")
+	String pg_id;
+
 	@SerializedName("escrow")
 	boolean escrow;
 
@@ -103,6 +106,9 @@ public class Payment {
 	@SerializedName("custom_data")
 	String custom_data;
 
+	@SerializedName("user_agent")
+	String user_agent;
+
 	@SerializedName("status")
 	String status;
 
@@ -165,6 +171,10 @@ public class Payment {
 
 	public String getPgTid() {
 		return pg_tid;
+	}
+
+	public String getPgId() {
+		return pg_id;
 	}
 
 	public boolean isEscrow() {
@@ -265,6 +275,10 @@ public class Payment {
 
 	public String getCustomData() {
 		return custom_data;
+	}
+
+	public String getUserAgent() {
+		return user_agent;
 	}
 
 	public String getStatus() {
