@@ -1,4 +1,10 @@
 # iamport REST Client for JAVA
+
+> **⚠️ DEPRECATED**: 이 레포지토리는 2026년 3월 4일부로 deprecated 되었으며, 공식 지원이 되지 않습니다.
+> 본 클라이언트는 함께 포함된 [openapi.json](./openapi.json) Swagger spec 기준으로 동작합니다.
+> 추가/수정이 필요한 경우 본 레포지토리를 fork하여 수정하거나,
+> [PortOne V1 REST API 문서](https://developers.portone.io/api/rest-v1?v=v1)를 참고하여 REST client를 직접 구현해주세요.
+
 JAVA 사용자를 위한 아임포트 REST API 연동 모듈입니다.
 
 - [com.squareup.retrofit2](https://github.com/square/retrofit) 모듈을 기반으로 만들어진 버전
@@ -39,56 +45,132 @@ pom.xml에 아래의 내용을 추가해주세요.
 
 ## 구현된 API
 
-### 인증 API  
+### 인증 API
 
 - POST /users/getToken
 
-### 결제관련 기본 API  
+### 결제관련 기본 API
 
+- GET /payments (결제내역 복수조회)
 - GET /payments/{imp_uid}
+- GET /payments/{imp_uid}/balance
+- GET /payments/find/{merchant_uid}/{payment_status}
+- GET /payments/findAll/{merchant_uid}/{payment_status}
 - GET /payments/status/{payment_status}
 - POST /payments/cancel
-- POST /subscribe/payments/onetime
-- POST /subscribe/payments/again
-- POST /subscribe/payments/schedule
-- POST /subscribe/payments/unschedule
 
 ### 결제 사전검증 API
 
 - POST /payments/prepare
+- PUT /payments/prepare
 - GET /payments/prepare/{merchant_uid}
 
-### 본인인증 API  
+### 본인인증 API
 
 - GET /certifications/{imp_uid}
+- DELETE /certifications/{imp_uid}
+- POST /certifications/otp/request
+- POST /certifications/otp/confirm/{imp_uid}
 
-### 에스크로 API   
+### 에스크로 API
 
+- GET /escrows/logis/{imp_uid}
 - POST /escrows/logis/{imp_uid}
+- PUT /escrows/logis/{imp_uid}
 
-### 정기결제 고객정보 API
+### 비인증 결제 API
 
+- POST /subscribe/payments/onetime
+- POST /subscribe/payments/again
+
+### 정기결제 예약 API
+
+- POST /subscribe/payments/schedule
+- POST /subscribe/payments/unschedule
+- GET /subscribe/payments/schedule
+- GET /subscribe/payments/schedule/{merchant_uid}
+- PUT /subscribe/payments/schedule/{merchant_uid}
+- POST /subscribe/payments/schedule/{merchant_uid}/retry
+- POST /subscribe/payments/schedule/{merchant_uid}/reschedule
+- GET /subscribe/payments/schedule/customers/{customer_uid}
+
+### 빌링키 고객정보 API
+
+- GET /subscribe/customers
 - GET /subscribe/customers/{customer_uid}
 - POST /subscribe/customers/{customer_uid}
+- DELETE /subscribe/customers/{customer_uid}
+- GET /subscribe/customers/{customer_uid}/payments
+- GET /subscribe/customers/{customer_uid}/schedules
 
-### 네이버페이 주문처리 관련 API  
+### 은행/카드 코드 API
+
+- GET /banks
+- GET /banks/{bank_standard_code}
+- GET /cards
+- GET /cards/{card_standard_code}
+
+### 베네피아 API
+
+- POST /benepia/point
+- POST /benepia/payment
+
+### 편의점 결제 API
+
+- POST /cvs
+- DELETE /cvs/{imp_uid}
+
+### KCP 퀵페이 API
+
+- DELETE /kcpquick/members/{member_id}
+- POST /kcpquick/payment/money
+
+### 현금영수증 API
+
+- GET /receipts/{imp_uid}
+- POST /receipts/{imp_uid}
+- DELETE /receipts/{imp_uid}
+- GET /receipts/external/{merchant_uid}
+- POST /receipts/external/{merchant_uid}
+- DELETE /receipts/external/{merchant_uid}
+
+### 가상계좌 API
+
+- POST /vbanks
+- GET /vbanks/holder
+- PUT /vbanks/{imp_uid}
+- DELETE /vbanks/{imp_uid}
+
+### 네이버페이 주문처리 관련 API
 
 - GET /naver/product-orders/{product_order_id}
 - GET /naver/reviews
+- GET /payments/{imp_uid}/naver/cash-amount
 - GET /payments/{imp_uid}/naver/product-orders
+- POST /payments/{imp_uid}/naver/approve-cancel
 - POST /payments/{imp_uid}/naver/cancel
+- POST /payments/{imp_uid}/naver/collect-exchanged
 - POST /payments/{imp_uid}/naver/ship
+- POST /payments/{imp_uid}/naver/ship-exchanged
 - POST /payments/{imp_uid}/naver/place
 - POST /payments/{imp_uid}/naver/confirm
 - POST /payments/{imp_uid}/naver/point
 
-### 네이버페이 반품처리 관련 API  
+### 네이버페이 반품처리 관련 API
 
 - POST /payments/{imp_uid}/naver/request-return
 - POST /payments/{imp_uid}/naver/approve-return
 - POST /payments/{imp_uid}/naver/reject-return
 - POST /payments/{imp_uid}/naver/withhold-return
 - POST /payments/{imp_uid}/naver/resolve-return
+
+### 기타 API
+
+- POST /payco/orders/status/{imp_uid}
+- POST /partners/receipts/{imp_uid}
+- POST /paymentwall/delivery
+- GET /tiers/{tier_code}
+- GET /users/pg
 
 ## API Client 생성  
 
