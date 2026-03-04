@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +14,10 @@ import com.siot.IamportRestClient.constant.CardConstant;
 import com.siot.IamportRestClient.request.*;
 import com.siot.IamportRestClient.request.naver.*;
 import com.siot.IamportRestClient.response.*;
+import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
+import com.siot.IamportRestClient.response.naver.NaverCashAmount;
+import com.siot.IamportRestClient.response.naver.NaverProductOrder;
+import com.siot.IamportRestClient.response.payco.OrderStatus;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,9 +25,6 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisPersonData;
-import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
-import com.siot.IamportRestClient.response.naver.NaverProductOrder;
-import com.siot.IamportRestClient.response.payco.OrderStatus;
 
 import static org.junit.Assert.*;
 
@@ -880,6 +883,1055 @@ public class IamportRestTest {
 //
 //		assertEquals(1, schedule_response.getCode()); //중복된 merchant_uid이므로 schedule에 실패함
 //	}
+
+    /* ============================================
+     * PAYMENTS (additional) tests
+     * ============================================ */
+
+    @Test
+    public void testPaymentsByImpUid() {
+        try {
+            List<String> impUids = Arrays.asList("imp_448280090638", "imp_138841716839");
+            IamportResponse<List<Payment>> response = client.paymentsByImpUid(impUids);
+
+            assertNotNull(response.getResponse());
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testPaymentByMerchantUid() {
+        String testMerchantUid = "merchant_1448280088556";
+        try {
+            IamportResponse<Payment> response = client.paymentByMerchantUid(testMerchantUid, "all");
+
+            assertNotNull(response.getResponse());
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testPaymentsByMerchantUid() {
+        String testMerchantUid = "merchant_1448280088556";
+        try {
+            IamportResponse<PagedDataList<Payment>> response = client.paymentsByMerchantUid(testMerchantUid, "all");
+
+            assertNotNull(response.getResponse());
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testPutPrepare() {
+        try {
+            PrepareData prepareData = new PrepareData(getRandomMerchantUid(), BigDecimal.valueOf(1000));
+            IamportResponse<Prepare> response = client.putPrepare(prepareData);
+
+            assertNotNull(response.getResponse());
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * CERTIFICATIONS (additional) tests
+     * ============================================ */
+
+    @Test
+    public void testDeleteCertification() {
+        String testImpUid = "imp_test_certification_uid";
+        try {
+            IamportResponse<Certification> response = client.deleteCertification(testImpUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testOtpRequest() {
+        try {
+            OtpRequestData otpData = new OtpRequestData("홍길동", "01012345678", "19900101", "1", "SKT", "channel_key_test");
+            IamportResponse<Certification> response = client.otpRequest(otpData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testOtpConfirm() {
+        String testImpUid = "imp_test_otp_uid";
+        try {
+            OtpConfirmData otpData = new OtpConfirmData("123456");
+            IamportResponse<Certification> response = client.otpConfirm(testImpUid, otpData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * CODES tests
+     * ============================================ */
+
+    @Test
+    public void testAllBankCodes() {
+        try {
+            IamportResponse<List<StandardCode>> response = client.allBankCodes();
+
+            assertNotNull(response.getResponse());
+            assertFalse(response.getResponse().isEmpty());
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testBankCode() {
+        try {
+            IamportResponse<StandardCode> response = client.bankCode("004");
+
+            assertNotNull(response.getResponse());
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testAllCardCodes() {
+        try {
+            IamportResponse<List<StandardCode>> response = client.allCardCodes();
+
+            assertNotNull(response.getResponse());
+            assertFalse(response.getResponse().isEmpty());
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testCardCode() {
+        try {
+            IamportResponse<StandardCode> response = client.cardCode("361");
+
+            assertNotNull(response.getResponse());
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * ESCROW (additional) tests
+     * ============================================ */
+
+    @Test
+    public void testGetEscrowLogis() {
+        String testImpUid = "imp_205852873956";
+        try {
+            IamportResponse<EscrowLogisInvoice> response = client.getEscrowLogis(testImpUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testPutEscrowLogis() {
+        String testImpUid = "imp_205852873956";
+
+        EscrowLogisPersonData sender = new EscrowLogisPersonData("가맹점", "02-1234-1234", "서울 용산구", "12345");
+        EscrowLogisPersonData receiver = new EscrowLogisPersonData("홍길동", "010-1234-5678", "서울 강남구 삼성동", "98765");
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 2018);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 3);
+
+        EscrowLogisInvoiceData invoice = new EscrowLogisInvoiceData("LOGEN", "123456789", cal.getTime());
+
+        try {
+            IamportResponse<EscrowLogisInvoice> response = client.putEscrowLogis(testImpUid, new EscrowLogisData(invoice, receiver, sender));
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * SUBSCRIBE (additional) tests
+     * ============================================ */
+
+    @Test
+    public void testGetScheduleByMerchantUid() {
+        String testMerchantUid = "scheduled_merchant_test";
+        try {
+            IamportResponse<Schedule> response = client.getScheduleByMerchantUid(testMerchantUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testPutScheduleByMerchantUid() {
+        String testMerchantUid = "scheduled_merchant_test";
+        long newScheduleAt = System.currentTimeMillis() / 1000L + 86400;
+        ScheduleUpdateData updateData = new ScheduleUpdateData(newScheduleAt);
+        try {
+            IamportResponse<Schedule> response = client.putScheduleByMerchantUid(testMerchantUid, updateData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRetrySchedule() {
+        String testMerchantUid = "scheduled_merchant_test";
+        ScheduleRetryData retryData = new ScheduleRetryData();
+        try {
+            IamportResponse<Payment> response = client.retrySchedule(testMerchantUid, retryData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRescheduleSchedule() {
+        String testMerchantUid = "scheduled_merchant_test";
+        long newScheduleAt = System.currentTimeMillis() / 1000L + 172800;
+        ScheduleRescheduleData rescheduleData = new ScheduleRescheduleData(newScheduleAt);
+        try {
+            IamportResponse<Schedule> response = client.rescheduleSchedule(testMerchantUid, rescheduleData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetScheduleByCustomerUid() {
+        String testCustomerUid = "customer_123456";
+        try {
+            IamportResponse<ScheduleList> response = client.getScheduleByCustomerUid(testCustomerUid, 1, 1643497892, 1948595492, null);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * SUBSCRIBE.CUSTOMER (additional) tests
+     * ============================================ */
+
+    @Test
+    public void testGetBillingCustomers() {
+        try {
+            List<String> customerUids = Arrays.asList("customer_1234", "customer_5678");
+            IamportResponse<List<BillingCustomer>> response = client.getBillingCustomers(customerUids);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetCustomerPayments() {
+        String testCustomerUid = "customer_123456";
+        try {
+            IamportResponse<PagedDataList<Payment>> response = client.getCustomerPayments(testCustomerUid, 1);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetCustomerSchedules() {
+        String testCustomerUid = "customer_123456";
+        try {
+            IamportResponse<ScheduleList> response = client.getCustomerSchedules(testCustomerUid, 1, 1643497892, 1948595492, null);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * BENEPIA tests
+     * ============================================ */
+
+    @Test
+    public void testBenepiaPoint() {
+        try {
+            BenepiaPointData pointData = new BenepiaPointData("test_user", "test_password", "channel_key_test");
+            IamportResponse<BenepiaPoint> response = client.benepiaPoint(pointData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testBenepiaPayment() {
+        try {
+            BenepiaPaymentData paymentData = new BenepiaPaymentData("test_user", "test_password", getRandomMerchantUid(), BigDecimal.valueOf(1000), "테스트상품", "channel_key_test");
+            IamportResponse<Payment> response = client.benepiaPayment(paymentData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * CVS tests
+     * ============================================ */
+
+    @Test
+    public void testIssueCvsPayment() {
+        try {
+            CvsPaymentData cvsData = new CvsPaymentData("channel_key_test", getRandomMerchantUid(), BigDecimal.valueOf(1000));
+            cvsData.setName("테스트상품");
+            IamportResponse<Payment> response = client.issueCvsPayment(cvsData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRevokeCvsPayment() {
+        String testImpUid = "imp_test_cvs_uid";
+        try {
+            IamportResponse<Payment> response = client.revokeCvsPayment(testImpUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * KCPQUICK tests
+     * ============================================ */
+
+    @Test
+    public void testDeleteKcpQuickMember() {
+        String testMemberId = "test_member_id";
+        try {
+            IamportResponse<EmptyResponse> response = client.deleteKcpQuickMember(testMemberId);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testPayKcpQuickMoney() {
+        try {
+            KcpQuickPaymentData paymentData = new KcpQuickPaymentData("test_member_id", "channel_key_test", getRandomMerchantUid(), "테스트상품", 1000);
+            IamportResponse<Payment> response = client.payKcpQuickMoney(paymentData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * NAVER (additional) tests
+     * ============================================ */
+
+    @Test
+    public void testNaverCashAmount() {
+        IamportClient naverClient = getNaverTestClient();
+        String testImpUid = "imp_630554823245";
+
+        try {
+            IamportResponse<NaverCashAmount> response = naverClient.naverCashAmount(testImpUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testNaverApproveCancel() {
+        IamportClient naverClient = getNaverTestClient();
+        String testImpUid = "imp_630554823245";
+
+        NaverApproveCancelData data = new NaverApproveCancelData();
+        data.setProductOrderId(new String[]{"test_product_order_id"});
+
+        try {
+            IamportResponse<List<NaverProductOrder>> response = naverClient.naverApproveCancel(testImpUid, data);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testNaverCollectExchanged() {
+        IamportClient naverClient = getNaverTestClient();
+        String testImpUid = "imp_630554823245";
+
+        NaverCollectExchangedData data = new NaverCollectExchangedData();
+        data.setProductOrderId(new String[]{"test_product_order_id"});
+
+        try {
+            IamportResponse<List<NaverProductOrder>> response = naverClient.naverCollectExchanged(testImpUid, data);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testNaverShipExchanged() {
+        IamportClient naverClient = getNaverTestClient();
+        String testImpUid = "imp_630554823245";
+
+        NaverShipExchangedData data = new NaverShipExchangedData(NaverShipExchangedData.METHOD_DELIVERY);
+        data.setProductOrderId(new String[]{"test_product_order_id"});
+
+        try {
+            IamportResponse<List<NaverProductOrder>> response = naverClient.naverShipExchanged(testImpUid, data);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * PARTNERS tests
+     * ============================================ */
+
+    @Test
+    public void testPartnerReceipt() {
+        String testImpUid = "imp_test_partner_uid";
+        List<PartnersReceiptData.PartnerEntry> entries = new ArrayList<>();
+        entries.add(new PartnersReceiptData.PartnerEntry("1234567890", "테스트회사", BigDecimal.valueOf(1000)));
+        PartnersReceiptData receiptData = new PartnersReceiptData(entries);
+
+        try {
+            IamportResponse<EmptyResponse> response = client.partnerReceipt(testImpUid, receiptData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * PAYMENTWALL tests
+     * ============================================ */
+
+    @Test
+    public void testPaymentwallDelivery() {
+        long now = System.currentTimeMillis() / 1000L;
+        PaymentwallDeliveryData deliveryData = new PaymentwallDeliveryData(
+            "imp_test_uid", "merchant_test_uid", "physical", "order_shipped",
+            now + 259200, now, "yes", "test@example.com"
+        );
+
+        try {
+            IamportResponse<EmptyResponse> response = client.paymentwallDelivery(deliveryData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * RECEIPTS tests
+     * ============================================ */
+
+    @Test
+    public void testGetReceipt() {
+        String testImpUid = "imp_448280090638";
+        try {
+            IamportResponse<Receipt> response = client.getReceipt(testImpUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testIssueReceipt() {
+        String testImpUid = "imp_448280090638";
+        ReceiptData receiptData = new ReceiptData("0101234567");
+        receiptData.setType("person");
+
+        try {
+            IamportResponse<Receipt> response = client.issueReceipt(testImpUid, receiptData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRevokeReceipt() {
+        String testImpUid = "imp_448280090638";
+        try {
+            IamportResponse<Receipt> response = client.revokeReceipt(testImpUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetExternalReceipt() {
+        String testMerchantUid = "merchant_test_external";
+        try {
+            IamportResponse<ExternalReceipt> response = client.getExternalReceipt(testMerchantUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testIssueExternalReceipt() {
+        String testMerchantUid = getRandomMerchantUid();
+        ExternalReceiptData receiptData = new ExternalReceiptData("channel_key_test", "테스트상품", 1000, "0101234567");
+
+        try {
+            IamportResponse<ExternalReceipt> response = client.issueExternalReceipt(testMerchantUid, receiptData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRevokeExternalReceipt() {
+        String testMerchantUid = "merchant_test_external";
+        try {
+            IamportResponse<ExternalReceipt> response = client.revokeExternalReceipt(testMerchantUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * TIERS tests
+     * ============================================ */
+
+    @Test
+    public void testGetTier() {
+        String testTierCode = "test_tier_code";
+        try {
+            IamportResponse<TierInfo> response = client.getTier(testTierCode);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * USERS tests
+     * ============================================ */
+
+    @Test
+    public void testGetPgSettings() {
+        try {
+            IamportResponse<List<PgInfo>> response = client.getPgSettings();
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ============================================
+     * VBANKS tests
+     * ============================================ */
+
+    @Test
+    public void testCreateVbank() {
+        long dueTimestamp = System.currentTimeMillis() / 1000L + 86400;
+        VbankData vbankData = new VbankData("channel_key_test", getRandomMerchantUid(), BigDecimal.valueOf(1000), "004", dueTimestamp);
+        vbankData.setVbank_holder("홍길동");
+        vbankData.setName("테스트 가상계좌");
+
+        try {
+            IamportResponse<Payment> response = client.createVbank(vbankData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetVbankHolder() {
+        try {
+            IamportResponse<VbankHolder> response = client.getVbankHolder("004", "12345678901234");
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testModifyVbank() {
+        String testImpUid = "imp_test_vbank_uid";
+        VbankEditData vbankData = new VbankEditData();
+        vbankData.setAmount(2000);
+
+        try {
+            IamportResponse<Payment> response = client.modifyVbank(testImpUid, vbankData);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRevokeVbank() {
+        String testImpUid = "imp_test_vbank_uid";
+        try {
+            IamportResponse<Payment> response = client.revokeVbank(testImpUid);
+
+            assertNotNull(response);
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 404:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private String getRandomMerchantUid() {
         DateFormat df = new SimpleDateFormat("$$hhmmssSS");

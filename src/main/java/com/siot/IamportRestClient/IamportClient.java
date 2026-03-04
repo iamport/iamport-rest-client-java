@@ -16,6 +16,7 @@ import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
 import com.siot.IamportRestClient.request.naver.*;
 import com.siot.IamportRestClient.response.*;
 import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
+import com.siot.IamportRestClient.response.naver.NaverCashAmount;
 import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.naver.NaverReview;
 import com.siot.IamportRestClient.serializer.BalanceEntrySerializer;
@@ -398,6 +399,472 @@ public class IamportClient {
 		Response<IamportResponse<EmptyResponse>> response = call.execute();
 
 		if( !response.isSuccessful() ) throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* PAYMENTS (additional) */
+	public IamportResponse<List<Payment>> paymentsByImpUid(List<String> impUids) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<List<Payment>>> call = this.iamport.payments_by_imp_uid(auth.getToken(), impUids);
+
+		Response<IamportResponse<List<Payment>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Payment> paymentByMerchantUid(String merchantUid, String paymentStatus) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.payment_by_merchant_uid(auth.getToken(), merchantUid, paymentStatus);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<PagedDataList<Payment>> paymentsByMerchantUid(String merchantUid, String paymentStatus) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<PagedDataList<Payment>>> call = this.iamport.payments_by_merchant_uid(auth.getToken(), merchantUid, paymentStatus);
+
+		Response<IamportResponse<PagedDataList<Payment>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Prepare> putPrepare(PrepareData prepareData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Prepare>> call = this.iamport.put_prepare(auth.getToken(), prepareData);
+
+		Response<IamportResponse<Prepare>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* CERTIFICATIONS (additional) */
+	public IamportResponse<Certification> deleteCertification(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Certification>> call = this.iamport.delete_certification(auth.getToken(), impUid);
+
+		Response<IamportResponse<Certification>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Certification> otpRequest(OtpRequestData otpData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Certification>> call = this.iamport.otp_request(auth.getToken(), otpData);
+
+		Response<IamportResponse<Certification>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Certification> otpConfirm(String impUid, OtpConfirmData otpData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Certification>> call = this.iamport.otp_confirm(auth.getToken(), impUid, otpData);
+
+		Response<IamportResponse<Certification>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* CODES */
+	public IamportResponse<List<StandardCode>> allBankCodes() throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<List<StandardCode>>> call = this.iamport.all_bank_codes(auth.getToken());
+
+		Response<IamportResponse<List<StandardCode>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<StandardCode> bankCode(String code) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<StandardCode>> call = this.iamport.bank_code(auth.getToken(), code);
+
+		Response<IamportResponse<StandardCode>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<List<StandardCode>> allCardCodes() throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<List<StandardCode>>> call = this.iamport.all_card_codes(auth.getToken());
+
+		Response<IamportResponse<List<StandardCode>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<StandardCode> cardCode(String code) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<StandardCode>> call = this.iamport.card_code(auth.getToken(), code);
+
+		Response<IamportResponse<StandardCode>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* ESCROW (additional) */
+	public IamportResponse<EscrowLogisInvoice> getEscrowLogis(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<EscrowLogisInvoice>> call = this.iamport.get_escrow_logis(auth.getToken(), impUid);
+
+		Response<IamportResponse<EscrowLogisInvoice>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<EscrowLogisInvoice> putEscrowLogis(String impUid, EscrowLogisData logisData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<EscrowLogisInvoice>> call = this.iamport.put_escrow_logis(auth.getToken(), impUid, logisData);
+
+		Response<IamportResponse<EscrowLogisInvoice>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* SUBSCRIBE (additional) */
+	public IamportResponse<Schedule> getScheduleByMerchantUid(String merchantUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Schedule>> call = this.iamport.get_schedule_by_merchant_uid(auth.getToken(), merchantUid);
+
+		Response<IamportResponse<Schedule>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Schedule> putScheduleByMerchantUid(String merchantUid, ScheduleUpdateData updateData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Schedule>> call = this.iamport.put_schedule_by_merchant_uid(auth.getToken(), merchantUid, updateData);
+
+		Response<IamportResponse<Schedule>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Payment> retrySchedule(String merchantUid, ScheduleRetryData retryData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.retry_schedule(auth.getToken(), merchantUid, retryData);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Schedule> rescheduleSchedule(String merchantUid, ScheduleRescheduleData rescheduleData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Schedule>> call = this.iamport.reschedule_schedule(auth.getToken(), merchantUid, rescheduleData);
+
+		Response<IamportResponse<Schedule>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<ScheduleList> getScheduleByCustomerUid(String customerUid, int page, int scheduleFrom, int scheduleTo, String scheduleStatus) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<ScheduleList>> call = this.iamport.get_schedule_by_customer_uid(auth.getToken(), customerUid, page, scheduleFrom, scheduleTo, scheduleStatus);
+
+		Response<IamportResponse<ScheduleList>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* SUBSCRIBE.CUSTOMER (additional) */
+	public IamportResponse<List<BillingCustomer>> getBillingCustomers(List<String> customerUids) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<List<BillingCustomer>>> call = this.iamport.get_billing_customers(auth.getToken(), customerUids);
+
+		Response<IamportResponse<List<BillingCustomer>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<PagedDataList<Payment>> getCustomerPayments(String customerUid, int page) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<PagedDataList<Payment>>> call = this.iamport.get_customer_payments(auth.getToken(), customerUid, page);
+
+		Response<IamportResponse<PagedDataList<Payment>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<ScheduleList> getCustomerSchedules(String customerUid, int page, int scheduleFrom, int scheduleTo, String scheduleStatus) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<ScheduleList>> call = this.iamport.get_customer_schedules(auth.getToken(), customerUid, page, scheduleFrom, scheduleTo, scheduleStatus);
+
+		Response<IamportResponse<ScheduleList>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* BENEPIA */
+	public IamportResponse<BenepiaPoint> benepiaPoint(BenepiaPointData pointData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<BenepiaPoint>> call = this.iamport.benepia_point(auth.getToken(), pointData);
+
+		Response<IamportResponse<BenepiaPoint>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Payment> benepiaPayment(BenepiaPaymentData paymentData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.benepia_payment(auth.getToken(), paymentData);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* CVS */
+	public IamportResponse<Payment> issueCvsPayment(CvsPaymentData cvsData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.issue_cvs_payment(auth.getToken(), cvsData);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Payment> revokeCvsPayment(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.revoke_cvs_payment(auth.getToken(), impUid);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* KCPQUICK */
+	public IamportResponse<EmptyResponse> deleteKcpQuickMember(String memberId) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<EmptyResponse>> call = this.iamport.delete_kcpquick_member(auth.getToken(), memberId);
+
+		Response<IamportResponse<EmptyResponse>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Payment> payKcpQuickMoney(KcpQuickPaymentData paymentData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.pay_kcpquick_money(auth.getToken(), paymentData);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* NAVER (additional) */
+	public IamportResponse<NaverCashAmount> naverCashAmount(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<NaverCashAmount>> call = this.iamport.naver_cash_amount(auth.getToken(), impUid);
+
+		Response<IamportResponse<NaverCashAmount>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<List<NaverProductOrder>> naverApproveCancel(String impUid, NaverApproveCancelData data) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<List<NaverProductOrder>>> call = this.iamport.naver_approve_cancel(auth.getToken(), impUid, data);
+
+		Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<List<NaverProductOrder>> naverCollectExchanged(String impUid, NaverCollectExchangedData data) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<List<NaverProductOrder>>> call = this.iamport.naver_collect_exchanged(auth.getToken(), impUid, data);
+
+		Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<List<NaverProductOrder>> naverShipExchanged(String impUid, NaverShipExchangedData data) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<List<NaverProductOrder>>> call = this.iamport.naver_ship_exchanged(auth.getToken(), impUid, data);
+
+		Response<IamportResponse<List<NaverProductOrder>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* PARTNERS */
+	public IamportResponse<EmptyResponse> partnerReceipt(String impUid, PartnersReceiptData receiptData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<EmptyResponse>> call = this.iamport.partner_receipt(auth.getToken(), impUid, receiptData);
+
+		Response<IamportResponse<EmptyResponse>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* PAYMENTWALL */
+	public IamportResponse<EmptyResponse> paymentwallDelivery(PaymentwallDeliveryData deliveryData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<EmptyResponse>> call = this.iamport.paymentwall_delivery(auth.getToken(), deliveryData);
+
+		Response<IamportResponse<EmptyResponse>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* RECEIPTS */
+	public IamportResponse<Receipt> getReceipt(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Receipt>> call = this.iamport.get_receipt(auth.getToken(), impUid);
+
+		Response<IamportResponse<Receipt>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Receipt> issueReceipt(String impUid, ReceiptData receiptData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Receipt>> call = this.iamport.issue_receipt(auth.getToken(), impUid, receiptData);
+
+		Response<IamportResponse<Receipt>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Receipt> revokeReceipt(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Receipt>> call = this.iamport.revoke_receipt(auth.getToken(), impUid);
+
+		Response<IamportResponse<Receipt>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<ExternalReceipt> getExternalReceipt(String merchantUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<ExternalReceipt>> call = this.iamport.get_external_receipt(auth.getToken(), merchantUid);
+
+		Response<IamportResponse<ExternalReceipt>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<ExternalReceipt> issueExternalReceipt(String merchantUid, ExternalReceiptData receiptData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<ExternalReceipt>> call = this.iamport.issue_external_receipt(auth.getToken(), merchantUid, receiptData);
+
+		Response<IamportResponse<ExternalReceipt>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<ExternalReceipt> revokeExternalReceipt(String merchantUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<ExternalReceipt>> call = this.iamport.revoke_external_receipt(auth.getToken(), merchantUid);
+
+		Response<IamportResponse<ExternalReceipt>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* TIERS */
+	public IamportResponse<TierInfo> getTier(String tierCode) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<TierInfo>> call = this.iamport.get_tier(auth.getToken(), tierCode);
+
+		Response<IamportResponse<TierInfo>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* USERS */
+	public IamportResponse<List<PgInfo>> getPgSettings() throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<List<PgInfo>>> call = this.iamport.get_pg_settings(auth.getToken());
+
+		Response<IamportResponse<List<PgInfo>>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	/* VBANKS */
+	public IamportResponse<Payment> createVbank(VbankData vbankData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.create_vbank(auth.getToken(), vbankData);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<VbankHolder> getVbankHolder(String bankCode, String bankNum) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<VbankHolder>> call = this.iamport.get_vbank_holder(auth.getToken(), bankCode, bankNum);
+
+		Response<IamportResponse<VbankHolder>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Payment> modifyVbank(String impUid, VbankEditData vbankData) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.modify_vbank(auth.getToken(), impUid, vbankData);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
+
+		return response.body();
+	}
+
+	public IamportResponse<Payment> revokeVbank(String impUid) throws IamportResponseException, IOException {
+		AccessToken auth = getAuth().getResponse();
+		Call<IamportResponse<Payment>> call = this.iamport.revoke_vbank(auth.getToken(), impUid);
+
+		Response<IamportResponse<Payment>> response = call.execute();
+		if ( !response.isSuccessful() )	throw new IamportResponseException( getExceptionMessage(response), new HttpException(response) );
 
 		return response.body();
 	}
